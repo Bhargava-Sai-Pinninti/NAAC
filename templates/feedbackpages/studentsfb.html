@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Feedback Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+    background-image: url("{{ url_for('static', filename='images/background.jpg') }}");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 25px;
+    min-height: 100vh;
+    font-family: 'Lato', sans-serif;
+    font-weight: 550;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: auto; /* Enable scrolling */
+}
+
+/* Hide the scrollbar while still allowing scrolling */
+body::-webkit-scrollbar {
+    width: 0rem; /* Adjust the width as needed */
+    background-color: transparent; /* Make the background of the scrollbar transparent */
+}
+
+        #preloader {
+            /* Center the preloader on the page */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* Set the initial visibility to visible */
+            visibility: visible;
+            /* Adjust the z-index to control stacking order */
+            z-index: 100;
+            /* Set the width and height for the preloader circle */
+            width: 100%;
+            height: 100%;
+            /* Optionally, you can style the preloader further */
+            /* For example, adjust the background color, border-radius, etc. */
+            background-color: rgb(255, 255, 255);
+            /* Center the preloader image within the circle */
+            background-image: url("{{ url_for('static', filename='images/preloader.gif') }}");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 30%; /* Adjust the size of the preloader image */
+        }
+
+        .feedback-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 700px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 5px 55px rgb(0, 0, 0);
+        }
+
+        .feedback-header {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .feedback-label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .feedback-submit {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .feedback-submit:hover {
+            background-color: #8900b3;
+        }
+
+        .feedback-info {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .formdiv {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .formdiv label {
+            font-weight: bold;
+        }
+        option {
+    padding: 10px;
+    background-color: #252525; /* Background color */
+    color: #ffffff; /* Text color */
+}
+    </style>
+</head>
+<body>
+<div id="preloader"></div>
+
+<div class="feedback-container">
+    <a class="logout" href="/login" style="float: right; font-size: 16px; text-decoration: none;">Logout</a>
+    <h1 class="feedback-header"><u>Student Feedback</u></h1>
+    <p class="feedback-info">Your feedback is important to us. Please provide your feedback on the following aspects:</p>
+    <form class="formdiv" method="POST" action="/studentfb">
+
+    <input type="hidden" name="userid" id="userid" value="{{ userid }}">
+    <input type="hidden" name="user_type" value="{{ user_type }}">
+
+    <label class="feedback-label" for="Name">Your Full Name:</label>
+    <input type="text" id="Name" name="Name" placeholder="Please enter your full name" required>
+
+    <label for="mobileNumber">Mobile Number:</label>
+    <input type="tel" id="MobileNumber" name="MobileNumber" placeholder="Please enter your mobile number" required>
+    
+    <label for="email">Email ID:</label>
+    <input type="email" id="Email" name="Email" placeholder="Please enter your email" required>
+          
+    {% for column_name in column_names %}
+    <div>
+        <label>{{ column_name }}</label><hr>
+        <input type="radio" name="{{ column_name }}" value="4" required> Strongly Agree<br>
+        <input type="radio" name="{{ column_name }}" value="3"> Agree<br>
+        <input type="radio" name="{{ column_name }}" value="2"> Neutral<br>
+        <input type="radio" name="{{ column_name }}" value="1"> Disagree<br><hr>
+    </div>
+{% endfor %}
+
+        <label class="feedback-label" for="Suggestion">Suggestions (if any):</label>
+        <textarea id="Suggestion" name="Suggestion" placeholder="Please enter your Suggestion"  required></textarea>
+
+        <button class="feedback-submit" type="submit">Submit Feedback</button>
+     
+    </form>
+</div>
+<script>
+    var loader = document.getElementById("preloader");
+    var startTime = new Date().getTime();
+    var pageLoaded = false;
+
+    // Function to hide the preloader
+    function hidePreloader() {
+        loader.style.visibility = "hidden";
+    }
+
+    // Function to handle when the page is fully loaded
+    function onPageLoaded() {
+        pageLoaded = true;
+        var currentTime = new Date().getTime();
+        var timeDiff = currentTime - startTime;
+        var minDisplayTime = 800; // 1 seconds
+        var remainingTime = minDisplayTime - timeDiff;
+
+        if (remainingTime <= 0) {
+            hidePreloader();
+        } else {
+            setTimeout(hidePreloader, remainingTime);
+        }
+    }
+
+    // Hide the preloader after 1 seconds (minimum display time)
+    setTimeout(hidePreloader, 800);
+
+    // Check if the page is fully loaded, and if so, hide the preloader
+    window.addEventListener("load", onPageLoaded);
+
+    function clearForm() {
+        document.getElementById("name").value = "";
+        document.getElementById("mobileNumber").value = "";
+        document.getElementById("branch").selectedIndex = 0;
+        document.getElementById("email").value = "";
+        for (var i = 1; i <= 14; i++) {
+            document.getElementById("q" + i).selectedIndex = 0;
+        }
+        document.getElementById("Suggestions").value = "";
+    }
+
+    // Attach a click event listener to the clear form button
+    document.getElementById("clearFormButton").addEventListener("click", clearForm);
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Error</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        .error-message {
+            font-size: 24px;
+            color: red;
+        }
+        .error-gif {
+            width: 300px;
+            display: block;
+            margin: 20px auto; /* Center the image horizontally with some space */
+        }
+        .button {
+            margin-top: 20px;
+            padding: 20px 20px;
+            background-color: red;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <img class="error-gif" src="{{ url_for('static', filename='images/error1.gif') }}" alt="Error GIF">
+        <h1 class="error-message">Server Error</h1>
+        <br>
+        <a class="button" href="/">Home</a>
+    </div>
+</body>
+</html>

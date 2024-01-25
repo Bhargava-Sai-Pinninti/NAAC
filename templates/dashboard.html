@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <title>Svec Admin's Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.2.2/html2canvas.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Example using Google Fonts */
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-image: url("{{ url_for('static', filename='images/background1.jpg') }}");
+    background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      background-color: rgb(255, 255, 255);
+      scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    overflow-y: scroll;
+}
+/* Hide the scrollbar in Webkit (Chrome, Safari) */
+body::-webkit-scrollbar {
+    width: 0;
+}
+
+/* Create a custom scrollbar thumb */
+body::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0); /* Transparent thumb */
+}
+
+/* Create a custom scrollbar track */
+body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0); /* Transparent track */
+}
+
+.sidebar {
+  position: fixed;
+  top: 60px;
+  width: 160px;
+  height: calc(100% - 60px);
+  background: rgba(0, 0, 0, 0);
+  overflow: hidden; /* Hide the scrollbar by default */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.sidebar:hover ~ .main {
+    overflow: hidden;
+}
+.sidebar:hover {
+  overflow: auto; /* Show scrollbar on hover for scrolling */
+}
+
+
+        .sidebar ul {
+            margin-top: 10px;
+        }
+
+        .sidebar ul li {
+            width: 100%;
+            list-style: none;
+        }
+
+        .sidebar ul li:hover {
+            background: #007bff;
+        }
+
+        .sidebar ul li:hover a {
+            color: #ffffff;
+        }
+
+        .sidebar ul li a {
+            width: 100%;
+            text-decoration: none;
+            color: #000000;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .sidebar ul li a i {
+            min-width: 50px;
+            font-size: 20px;
+            text-align: center;
+        }
+        
+
+ 
+        /* Main Styles */
+/* Main Styles */
+.main {
+    position: absolute;
+    top: 60px;
+    left: 180px;
+    background: rgba(0, 0, 0, 0);
+    overflow: scroll; /* Add scroll but hide scrollbar */
+    scrollbar-width: none; /* Hide the scrollbar in Firefox */
+    -ms-overflow-style: none; /* Hide the scrollbar in IE/Edge */
+    padding:1px;
+    border-radius: 25px;
+    margin: 1px;
+    width: calc(100% - 270px); /* Adjust 260px according to your sidebar width */
+    min-height: calc(100vh - 60px);
+}
+
+/* Hide the scrollbar in Webkit (Chrome, Safari) */
+.main::-webkit-scrollbar {
+    display: none;
+}
+
+        h1 {
+    font-size: 28px;
+    color: #000000;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #000000;
+}
+
+a {
+    color: #0015ff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #3d00b0;
+}
+
+
+/* Add this CSS for side-by-side posts in the content class */
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.ww {
+    max-width: 20px; /* Adjust the maximum width as per your preference */
+    max-height: 28px; /* Adjust the maximum height as per your preference */
+}
+/* Style the top bar */
+/* Style the top bar */
+.topbar {
+    position: fixed;
+    background: rgb(223,227,230);
+    width: 100%;
+    padding: 0 20px;
+    height: 60px;
+    display: flex;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    align-items: center;
+    justify-content: space-between;
+    z-index: 2;
+}
+
+/* Style the form div */
+.formdiv {
+    display: flex;
+    align-items: center; /* Center vertically */
+}
+
+/* Style the form elements */
+.formdiv form {
+    display: flex;
+    align-items: center; /* Center vertically */
+}
+
+.formdiv label {
+    margin-right: 10px; /* Add spacing between labels and inputs */
+    font-weight: bold;
+}
+
+.formdiv select,
+.formdiv input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.formdiv button[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Add spacing between elements */
+.formdiv label,
+.formdiv select,
+.formdiv input[type="text"],
+.formdiv button[type="submit"] {
+    margin: 5px;
+}
+
+/* Additional styling */
+.formdiv select,
+.formdiv input[type="text"] {
+    background-color: #f4f4f4;
+}
+
+.formdiv select:focus,
+.formdiv input[type="text"]:focus {
+    border: 1px solid #007BFF;
+    outline: none;
+}
+.formdiv button:hover {
+    background-color: #48cf00;}
+
+/* Style the top bar h4 and h6 elements */
+.topbar h4,
+.topbar h6 {
+    color: #000000;
+    font-size: 15px;
+}
+
+
+/* Add this CSS to your existing styles */
+/* Styles for the container */
+.logo-container {
+  display: flex;
+  align-items: center; /* Vertically center the content */
+}
+
+/* Styles for the logo */
+.logo {
+  display: flex; /* Display its children side by side */
+  align-items: center; /* Vertically center the content */
+  margin-right: 10px; /* Add some spacing between the logo and the h4 */
+}
+
+.logo img {
+  width: 45px;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 2px;
+  transition: 3.5s;
+  margin: 5px;
+}
+
+.logo h4 {
+  color: #000000;
+  font-size: 15px;
+  margin-left: 5px; /* Add some spacing between the image and text */
+}
+
+
+
+h4 , label  {
+    color: #000000;
+    font-size: 15px;
+}
+
+
+.topbar .form-buttons {
+    display: flex;
+    align-items: center;
+}
+
+/* Adjust the button style with padding */
+.topbar .form-buttons button {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s, color 0.3s; /* Add transition for smooth hover effect */
+}
+
+/* Apply the hover effect */
+.topbar .form-buttons button:hover {
+    background-color: #ff9100;}
+
+.topbar .form-buttons button:last-child {
+    margin-right: 0; /* Remove margin from the last button */
+}
+
+.form-buttons select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f4f4f4;
+    margin: 5px;
+    font-weight: bold;
+    outline: none;
+}
+
+/* Add the form-buttons class to the select element in form-buttons */
+.form-buttons select {
+    background-color: #f4f4f4;
+}
+
+  /* Style for chat message boxes */
+  .outer {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 10px;
+    }
+
+    .me {
+   
+    background: rgb(255, 0, 68);
+    color: #ffffff;
+    border-radius: 10px; /* Add border-radius for a rounded look */
+    padding: 5px 10px; /* Add padding to the message box */
+    margin: 5px; /* Add margin to create space between messages */
+    
+    font-size: 22px;  /* Limit the width of the message box */
+}
+
+.me button {
+    background: rgb(255, 157, 0); /* Change the delete button background color */
+    color: #ffffff; /* Change the delete button text color */
+    border: none;
+    border-radius: 5px; /* Add border-radius for a rounded delete button */
+    padding: 10px 10px; /* Add padding to the delete button */
+    margin-left: 10px; /* Add margin to separate the delete button from the message */
+    cursor: pointer;
+}
+
+.me button:hover {
+    background: #f00a40; /* Change the delete button background color on hover */
+}
+
+
+    .notMe {
+    background:#0000ff; /* Change background color */
+    color: #ffffff;
+    border-radius: 10px; /* Add border-radius for a rounded look */
+    padding: 8px 10px; /* Add padding to the message box */
+    margin: 5px; 
+    font-size: 22px; /* Add margin to create space between messages */
+     /* Limit the width of the message box */
+    }
+
+
+    #messages {
+        flex-grow: 1;
+        overflow-y: auto;
+        background: #fffffffe;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        box-sizing: border-box;
+       
+    }
+    #msgTxt {
+    flex-grow: 1;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-size: 16px; /* Adjust the font size */
+    background-color: #ffffff; /* Set the background color */
+   
+}
+
+#msgBtn {
+    width: 100px; /* Adjust the button width */
+    height: 40px; /* Adjust the button height */
+    background: #0089fa;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+    margin-left: 10px;
+    font-size: 16px; /* Adjust the font size */
+}
+
+#msgBtn:hover {
+    background: #0078d4; /* Change the background color on hover */
+}
+
+
+    #CHAT-content {
+    position: absolute; /* Position absolutely within .main */
+    bottom: 0; /* Place it at the bottom */
+    width: 100%; /* Take the full width of .main */
+    height: auto; /* Allow it to expand as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+    padding: 10px;/* Push messages and input to the bottom */
+}
+#messages-container {
+     max-height: 80vh; /* Limit the maximum height to 60% of the viewport height */
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0); /* Use a semi-transparent white background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    margin: 5px;
+}
+
+
+#sendMsg {
+    background: rgba(95, 95, 95, 0.196);/* Semi-transparent white background for the input area */
+    padding: 10px;
+    margin: 10px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    border-radius: 30px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to separate from the messages container */
+}
+
+        #preloader {
+        /* Center the preloader on the page */
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        /* Set the initial visibility to visible */
+        visibility: visible;
+        /* Adjust the z-index to control stacking order */
+        z-index: 100;
+        /* Set the width and height for the preloader circle */
+        width: 100%;
+        height: 100%;
+        /* Optionally, you can style the preloader further */
+        /* For example, adjust the background color, border-radius, etc. */
+        background-color: rgb(255, 255, 255);
+        /* Center the preloader image within the circle */
+        background-image: url("{{ url_for('static', filename='images/preloader.gif') }}");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 30%; /* Adjust the size of the preloader image */
+      }
+      .chart-container {
+            width: 100%; /* Set the desired width of the container */
+            height: 500px;
+            margin: 1px; /* Set the desired height of the container */
+            background: rgba(0, 0, 0, 0);
+        }
+        
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+        }
+        /* Change font color for the labels and legends of each chart */
+.chart-legend ul li span, .chartjs-axis-label {
+    color: white; /* Set the color to white or your desired color */
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    padding: 1px;
+    border-bottom: 0.5px solid #a4a4a4;
+    transition: background-color 0.2s;
+}
+
+li:hover {
+    background-color: #e0e0e0;
+}
+
+
+.SuggestionTable {
+        width: 100%;
+        border-collapse: collapse;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        background: #f7f7f7; /* Light gray background color */
+        margin-bottom: 30px;
+    }
+    .SuggestionTable th, .SuggestionTable td {
+        border: 1px solid #ddd; /* Light gray border color */
+        padding: 5px;
+        text-align: center;
+    }
+
+    .SuggestionTable th {
+        background-color: #4CAF50; /* Official green background color */
+        color: #fff;
+        box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .SuggestionTable tr:nth-child(even) {
+        background-color: #f2f2f2; /* Light gray background for even rows */
+    }
+
+    .SuggestionTable tr:nth-child(odd) {
+        background-color: #e6e6e6; /* Slightly darker gray background for odd rows */
+    }
+
+    .SuggestionTable td:last-child {
+        font-weight: bold;
+        color: #4CAF50; /* Official green text color */
+    }
+
+    /* Responsive design */
+    @media screen and (max-width: 600px) {
+        .SuggestionTable {
+            border: 0;
+        }
+
+        .SuggestionTable thead {
+            display: none;
+        }
+
+        .SuggestionTable tr {
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .SuggestionTable td {
+            border: none;
+            border-bottom: 1px solid #ddd;
+            text-align: right;
+        }
+
+        .SuggestionTable td:last-child {
+            border-bottom: 0;
+        }
+    }
+
+.PercentageTable {
+        width: 100%;
+        border-collapse: collapse;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        background: #f2f2f2;
+        margin-top: 50px;
+        margin-bottom: 30px;
+    }
+
+    .PercentageTable th, .PercentageTable td {
+        border: 1px solid #ccc;
+        padding: 5px;
+        text-align: center;
+    }
+
+    .PercentageTable th {
+        background-color: #0073e6;
+        color: #fff;
+        box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .PercentageTable tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+
+    .PercentageTable tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .PercentageTable td:last-child {
+        font-weight: bold;
+        color: #0073e6;
+    }
+
+    /* Responsive design */
+    @media screen and (max-width: 600px) {
+        .PercentageTable {
+            border: 0;
+        }
+
+        .PercentageTable thead {
+            display: none;
+        }
+
+        .PercentageTable tr {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .PercentageTable td {
+            border: none;
+            border-bottom: 1px solid #ccc;
+            text-align: right;
+        }
+
+        .PercentageTable td:last-child {
+            border-bottom: 0;
+        }
+    }
+
+
+</style>
+</head>
+  <body>
+    <div id="preloader"></div>
+    <div class="container">
+      <div class="topbar">
+        <div class="logo-container">
+          <div class="logo">
+            <a href="/home"><img src="{{ url_for('static', filename='images/logo.png') }}"></a>
+            <h4>Admin Dashboard</h4>
+          </div>
+        </div>
+        <div class="formdiv">
+          <form method="POST">
+            <label for="userType">Select StakeHolder Type:</label>
+            <select id="table" name="table" required>
+              <option value="" disabled selected>
+                Please select an option
+              </option>
+              <option value="students">Students</option>
+              <option value="alumnis">Alumni</option>
+              <option value="facultys">Faculty</option>
+              <option value="employers">Employers</option>
+            </select>
+            <label for="year">Select Year:</label>
+       
+            <select id="year" name="year" required>
+              <option value="" disabled selected>
+                Please select an year
+              </option>
+              <option value="2023-24">2023-24</option>
+              <option value="2022-23">2022-23</option>
+              <option value="2021-22">2021-22</option>
+              <option value="2020-21">2020-21</option>
+              <option value="2019-20">2019-20</option>
+              <option value="2018-19">2018-19</option>
+            </select>
+            <button type="submit">Show</button>
+          </form>
+        </div>      
+        <div class="form-buttons">
+          <button onclick="captureScreenshot()">Save Snippet</button>
+
+    
+
+        <form action="{{ url_for('home') }}" method="GET">
+          <button type="submit">Log out</button>
+        </form>
+        </div>
+      </div>
+      <div class="sidebar">
+        <ul>
+          <li>
+            <a href="#" id="dashboard-link">
+              <i class="fas fa-th"></i>
+              <div>College wide</div>
+            </a>
+          </li>
+          <li>
+            <a href="#" id="AIML">
+              <i class='fas fa-robot'></i>
+              <div>AIML</div>
+            </a>
+          </li>
+          <li>
+            <a href="#" id="CSE">
+              <i class='fas fa-desktop'></i>
+              <div>CSE</div>
+            </a>
+          </li>
+          <li>
+            <a href="#" id="CSE(AI)">
+              <i class='fas fa-podcast'></i>
+              <div>CSE(AI)</div>
+            </a>
+          </li>
+          <li>
+            <a href="#" id="CST">
+              <i class='fas fa-laptop'></i>
+              <div>CST</div>
+            </a>
+          </li>
+          <li>
+            <a href="#" id="CIVIL">
+              <i class='fas fa-drafting-compass'></i>
+              <div>CE</div>
+            </a>
+          </li>
+          <li>
+            <a href="#" id="EEE">
+              <i class='fas fa-charging-station'></i>
+              <div>EEE</div>
+            </a>
+          </li>
+          <li>
+            <a href="#" id="ECE">
+              <i class='fas fa-microchip'></i>
+              <div>ECE</div>
+            </a>
+          </li>
+          <li>
+            <a href="#" id="ECT">
+              <i class='fas fa-satellite-dish'></i>
+              <div>ECT</div>
+            </a>
+          </li>
+          <li>
+            <a href="#" id="MECH">
+              <i class='fas fa-tools'></i>
+              <div>ME</div>
+            </a>
+          </li>
+          <li>
+            <a href="#" id="CHAT">
+              <i class='fas fa-quote-right'></i>
+              <div>Discussions</div>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+
+
+      <div class="main" id="main-content">
+        <div id="dashboard-content" class="content">
+          <center>
+          <div class="chart-container">
+            <div id="canvas-container">
+                <canvas id="MaincolumnChart0"></canvas>
+            </div>
+        </div>
+
+
+        
+        {% if data %}
+    <table class="PercentageTable" name="Maintable">
+        <thead>
+            <tr>
+                <th>Qno</th>
+                <th>Question</th>
+                <th>Strongly Agree</th>
+                <th>Agree</th>
+                <th>Neutral</th>
+                <th>Disagree</th>
+                <th>Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range(data|length) %}
+            <tr>
+                <td>{{ data[i][0] }}</td>
+                <td>{{ questions[i] }}</td>
+                <td>{{ data[i][1] }}</td>
+                <td>{{ data[i][2] }}</td>
+                <td>{{ data[i][3] }}</td>
+                <td>{{ data[i][4] }}</td>
+                <td>
+                    {% set total = data[i][1] + data[i][2] + data[i][3] + data[i][4] %}
+                    {% if total != 0 %}
+                        <script>
+                            var rawResult = {{ ((data[i][1]*4 + data[i][2]*3 + data[i][3]*2 + data[i][4]*1) / (total*4)) * 100 }};
+                            var roundedResult = (Math.round(rawResult * 100) / 100).toFixed(1);
+                            document.write(roundedResult + " %");
+                        </script>
+                    {% else %}
+                        
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+        </center>
+        </div>
+        <div id="AIML-content" class="content" style="display: none">
+
+          <center>
+
+            <div class="chart-container">
+              <div id="canvas-container">
+                  <canvas id="MaincolumnChart1"></canvas>
+              </div>
+            </div>
+
+            {% if data1 %}
+    <table class="PercentageTable" name="AIMLtable">
+        <thead>
+            <tr>
+                <th>Qno</th>
+                <th>Question</th>
+                <th>Strongly Agree</th>
+                <th>Agree</th>
+                <th>Neutral</th>
+                <th>Disagree</th>
+                <th>Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range(data1|length) %}
+            <tr>
+                <td>{{ data1[i][0] }}</td>
+                <td>{{ questions[i] }}</td>
+                <td>{{ data1[i][1] }}</td>
+                <td>{{ data1[i][2] }}</td>
+                <td>{{ data1[i][3] }}</td>
+                <td>{{ data1[i][4] }}</td>
+                <td>
+                    {% set total = data1[i][1] + data1[i][2] + data1[i][3] + data1[i][4] %}
+                    {% if total != 0 %}
+                        <script>
+                            var rawResult = {{ ((data1[i][1]*4 + data1[i][2]*3 + data1[i][3]*2 + data1[i][4]*1) / (total*4)) * 100 }};
+                            var roundedResult = (Math.round(rawResult * 100) / 100).toFixed(1);
+                            document.write(roundedResult + " %");
+                        </script>
+                    {% else %}
+                        
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+
+          {%if sdata1 %}
+          <table class="SuggestionTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Suggestions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for value in sdata1 %}
+              <tr>
+                <td>{{ value[0] }}</td>
+                <td>{{ value[1] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+
+          </center>
+        </div>
+
+        <div id="CSE-content" class="content" style="display: none">
+
+          <center>
+
+            <div class="chart-container">
+              <div id="canvas-container">
+                  <canvas id="MaincolumnChart2"></canvas>
+              </div>
+            </div>
+
+
+              {% if data2 %}
+            <table class="PercentageTable" name="Csetable">
+              <thead>
+                <tr>
+                  <th>Qno</th>
+                  <th>Question</th>
+                  <th>Strongly Agree</th>
+                  <th>Agree</th>
+                  <th>Neutral</th>
+                  <th>Disagree</th>
+                  <th>Percentage</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in range(data2|length) %}
+    <tr>
+        <td>{{ data2[i][0] }}</td>
+        <td>{{ questions[i] }}</td>
+        <td>{{ data2[i][1] }}</td>
+        <td>{{ data2[i][2] }}</td>
+        <td>{{ data2[i][3] }}</td>
+        <td>{{ data2[i][4] }}</td>
+        <td>
+            {% set total = data2[i][1] + data2[i][2] + data2[i][3] + data2[i][4] %}
+            {% if total != 0 %}
+                <script>
+                    var rawResult = {{ ((data2[i][1]*4 + data2[i][2]*3 + data2[i][3]*2  + data2[i][4]*1 ) / (total*4)) * 100 }};
+                    var roundedResult = (Math.round(rawResult * 100) / 100).toFixed(1);
+                    document.write(roundedResult+" %");
+                </script>
+            {% else %}
+                
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}
+              </tbody>
+            </table>
+          {% endif %} 
+
+              {%if sdata2 %}
+              <table class="SuggestionTable">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Suggestions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for value in sdata2 %}
+                  <tr>
+                    <td>{{ value[0] }}</td>
+                    <td>{{ value[1] }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% endif %}
+
+          </center>
+
+        </div>
+        <div id="CSE(AI)-content" class="content" style="display: none">
+
+          <center>
+            <div class="chart-container">
+              <div id="canvas-container">
+                  <canvas id="MaincolumnChart3"></canvas>
+              </div>
+              </div>
+
+              {% if data3 %}
+              <table class="PercentageTable" name="Cse(ai)table">
+                  <thead>
+                      <tr>
+                          <th>Qno</th>
+                          <th>Question</th>
+                          <th>Strongly Agree</th>
+                          <th>Agree</th>
+                          <th>Neutral</th>
+                          <th>Disagree</th>
+                          <th>Percentage</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for i in range(data3|length) %}
+                      <tr>
+                          <td>{{ data3[i][0] }}</td>
+                          <td>{{ questions[i] }}</td>
+                          <td>{{ data3[i][1] }}</td>
+                          <td>{{ data3[i][2] }}</td>
+                          <td>{{ data3[i][3] }}</td>
+                          <td>{{ data3[i][4] }}</td>
+                          <td>
+                              {% set total = data3[i][1] + data3[i][2] + data3[i][3] + data3[i][4] %}
+                              {% if total != 0 %}
+                                  <script>
+                                      var rawResult = {{ ((data3[i][1]*4 + data3[i][2]*3 + data3[i][3]*2 + data3[i][4]*1) / (total*4)) * 100 }};
+                                      var roundedResult = (Math.round(rawResult * 100) / 100).toFixed(1);
+                                      document.write(roundedResult + " %");
+                                  </script>
+                              {% else %}
+                                  
+                              {% endif %}
+                          </td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          {% endif %}
+          
+  
+
+              {%if sdata3 %}
+              <table class="SuggestionTable">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Suggestions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for value in sdata3 %}
+                  <tr>
+                    <td>{{ value[0] }}</td>
+                    <td>{{ value[1] }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% endif %}
+
+
+          </center>
+        </div>
+        <div id="CST-content" class="content" style="display: none"> 
+          <center> 
+            <div class="chart-container">
+              <div id="canvas-container">
+                  <canvas id="MaincolumnChart4"></canvas>
+              </div>
+              </div>
+
+
+              {% if data4 %}
+              <table class="PercentageTable" name="Csttable">
+                  <thead>
+                      <tr>
+                          <th>Qno</th>
+                          <th>Question</th>
+                          <th>Strongly Agree</th>
+                          <th>Agree</th>
+                          <th>Neutral</th>
+                          <th>Disagree</th>
+                          <th>Percentage</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for i in range(data4|length) %}
+                      <tr>
+                          <td>{{ data4[i][0] }}</td>
+                          <td>{{ questions[i] }}</td>
+                          <td>{{ data4[i][1] }}</td>
+                          <td>{{ data4[i][2] }}</td>
+                          <td>{{ data4[i][3] }}</td>
+                          <td>{{ data4[i][4] }}</td>
+                          <td>
+                              {% set total = data4[i][1] + data4[i][2] + data4[i][3] + data4[i][4] %}
+                              {% if total != 0 %}
+                                  <script>
+                                      var rawResult = {{ ((data4[i][1]*4 + data4[i][2]*3 + data4[i][3]*2 + data4[i][4]*1) / (total*4)) * 100 }};
+                                      var roundedResult = (Math.round(rawResult * 100) / 100).toFixed(1);
+                                      document.write(roundedResult + " %");
+                                  </script>
+                              {% else %}
+                                  
+                              {% endif %}
+                          </td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          {% endif %}
+          
+  
+              {%if sdata4 %}
+              <table class="SuggestionTable">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Suggestions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for value in sdata4 %}
+                  <tr>
+                    <td>{{ value[0] }}</td>
+                    <td>{{ value[1] }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% endif %}
+
+
+          </center>
+
+
+        </div>
+
+        <div id="CIVIL-content" class="content" style="display: none">
+
+          <center>
+            <div class="chart-container">
+              <div id="canvas-container">
+                  <canvas id="MaincolumnChart5"></canvas>
+              </div>
+            </div>
+
+
+            {% if data5 %}
+            <table class="PercentageTable" name="Civiltable">
+                <thead>
+                    <tr>
+                        <th>Qno</th>
+                        <th>Question</th>
+                        <th>Strongly Agree</th>
+                        <th>Agree</th>
+                        <th>Neutral</th>
+                        <th>Disagree</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(data5|length) %}
+                    <tr>
+                        <td>{{ data5[i][0] }}</td>
+                        <td>{{ questions[i] }}</td>
+                        <td>{{ data5[i][1] }}</td>
+                        <td>{{ data5[i][2] }}</td>
+                        <td>{{ data5[i][3] }}</td>
+                        <td>{{ data5[i][4] }}</td>
+                        <td>
+                            {% set total = data5[i][1] + data5[i][2] + data5[i][3] + data5[i][4] %}
+                            {% if total != 0 %}
+                                <script>
+                                    var rawResult = {{ ((data5[i][1]*4 + data5[i][2]*3 + data5[i][3]*2 + data5[i][4]*1) / (total*4)) * 100 }};
+                                    var roundedResult = (Math.round(rawResult * 100) / 100).toFixed(1);
+                                    document.write(roundedResult + " %");
+                                </script>
+                            {% else %}
+                                
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        
+  
+
+              {%if sdata5 %}
+              <table class="SuggestionTable">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Suggestions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for value in sdata5 %}
+                  <tr>
+                    <td>{{ value[0] }}</td>
+                    <td>{{ value[1] }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% endif %}
+
+          </center>
+
+        </div>
+
+        <div id="EEE-content" class="content" style="display: none">
+          <center>
+            <div class="chart-container">
+              <div id="canvas-container">
+                  <canvas id="MaincolumnChart6"></canvas>
+              </div>
+            </div>
+
+            {% if data6 %}
+            <table class="PercentageTable" name="Eeetable">
+                <thead>
+                    <tr>
+                        <th>Qno</th>
+                        <th>Question</th>
+                        <th>Strongly Agree</th>
+                        <th>Agree</th>
+                        <th>Neutral</th>
+                        <th>Disagree</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(data6|length) %}
+                    <tr>
+                        <td>{{ data6[i][0] }}</td>
+                        <td>{{ questions[i] }}</td>
+                        <td>{{ data6[i][1] }}</td>
+                        <td>{{ data6[i][2] }}</td>
+                        <td>{{ data6[i][3] }}</td>
+                        <td>{{ data6[i][4] }}</td>
+                        <td>
+                            {% set total = data6[i][1] + data6[i][2] + data6[i][3] + data6[i][4] %}
+                            {% if total != 0 %}
+                                <script>
+                                    var rawResult = {{ ((data6[i][1]*4 + data6[i][2]*3 + data6[i][3]*2 + data6[i][4]*1) / (total*4)) * 100 }};
+                                    var roundedResult = (Math.round(rawResult * 100) / 100).toFixed(1);
+                                    document.write(roundedResult + " %");
+                                </script>
+                            {% else %}
+                                
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        
+
+
+              {%if sdata6 %}
+              <table class="SuggestionTable">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Suggestions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for value in sdata6 %}
+                  <tr>
+                    <td>{{ value[0] }}</td>
+                    <td>{{ value[1] }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% endif %}
+          </center>
+        </div>
+        <div id="ECE-content" class="content" style="display: none">
+          <center>
+            <div class="chart-container">
+              <div id="canvas-container">
+                  <canvas id="MaincolumnChart7"></canvas>
+              </div>
+              </div>
+
+
+              {% if data7 %}
+              <table class="PercentageTable" name="Ecetable">
+                  <thead>
+                      <tr>
+                          <th>Qno</th>
+                          <th>Question</th>
+                          <th>Strongly Agree</th>
+                          <th>Agree</th>
+                          <th>Neutral</th>
+                          <th>Disagree</th>
+                          <th>Percentage</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for i in range(data7|length) %}
+                      <tr>
+                          <td>{{ data7[i][0] }}</td>
+                          <td>{{ questions[i] }}</td>
+                          <td>{{ data7[i][1] }}</td>
+                          <td>{{ data7[i][2] }}</td>
+                          <td>{{ data7[i][3] }}</td>
+                          <td>{{ data7[i][4] }}</td>
+                          <td>
+                              {% set total = data7[i][1] + data7[i][2] + data7[i][3] + data7[i][4] %}
+                              {% if total != 0 %}
+                                  <script>
+                                      var rawResult = {{ ((data7[i][1]*4 + data7[i][2]*3 + data7[i][3]*2 + data7[i][4]*1) / (total*4)) * 100 }};
+                                      var roundedResult = (Math.round(rawResult * 100) / 100).toFixed(1);
+                                      document.write(roundedResult + " %");
+                                  </script>
+                              {% else %}
+                                  
+                              {% endif %}
+                          </td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          {% endif %}
+          
+  
+
+
+              {%if sdata7 %}
+              <table class="SuggestionTable">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Suggestions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for value in sdata7 %}
+                  <tr>
+                    <td>{{ value[0] }}</td>
+                    <td>{{ value[1] }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% endif %}
+          </center>
+        </div>
+        <div id="ECT-content" class="content" style="display: none">
+          <center>
+            <div class="chart-container">
+              <div id="canvas-container">
+                  <canvas id="MaincolumnChart8"></canvas>
+              </div>
+              </div>
+
+
+              {% if data8 %}
+    <table class="PercentageTable" name="Ecttable">
+        <thead>
+            <tr>
+                <th>Qno</th>
+                <th>Question</th>
+                <th>Strongly Agree</th>
+                <th>Agree</th>
+                <th>Neutral</th>
+                <th>Disagree</th>
+                <th>Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range(data8|length) %}
+            <tr>
+                <td>{{ data8[i][0] }}</td>
+                <td>{{ questions[i] }}</td>
+                <td>{{ data8[i][1] }}</td>
+                <td>{{ data8[i][2] }}</td>
+                <td>{{ data8[i][3] }}</td>
+                <td>{{ data8[i][4] }}</td>
+                <td>
+                    {% set total = data8[i][1] + data8[i][2] + data8[i][3] + data8[i][4] %}
+                    {% if total != 0 %}
+                        <script>
+                            var rawResult = {{ ((data8[i][1]*4 + data8[i][2]*3 + data8[i][3]*2 + data8[i][4]*1) / (total*4)) * 100 }};
+                            var roundedResult = (Math.round(rawResult * 100) / 100).toFixed(1);
+                            document.write(roundedResult + " %");
+                        </script>
+                    {% else %}
+                        
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+
+
+              {%if sdata8 %}
+              <table class="SuggestionTable">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Suggestions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for value in sdata8 %}
+                  <tr>
+                    <td>{{ value[0] }}</td>
+                    <td>{{ value[1] }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% endif %}
+
+          </center>
+        </div>
+
+        <div id="MECH-content" class="content" style="display: none">
+          <center>
+<div class="chart-container">
+  <div id="canvas-container">
+    <canvas id="MaincolumnChart9"></canvas>
+  </div>
+  </div>
+
+  {% if data9 %}
+  <table class="PercentageTable" name="Mechtable">
+      <thead>
+          <tr>
+              <th>Qno</th>
+              <th>Question</th>
+              <th>Strongly Agree</th>
+              <th>Agree</th>
+              <th>Neutral</th>
+              <th>Disagree</th>
+              <th>Percentage</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for i in range(data9|length) %}
+          <tr>
+              <td>{{ data9[i][0] }}</td>
+              <td>{{ questions[i] }}</td>
+              <td>{{ data9[i][1] }}</td>
+              <td>{{ data9[i][2] }}</td>
+              <td>{{ data9[i][3] }}</td>
+              <td>{{ data9[i][4] }}</td>
+              <td>
+                  {% set total = data9[i][1] + data9[i][2] + data9[i][3] + data9[i][4] %}
+                  {% if total != 0 %}
+                      <script>
+                          var rawResult = {{ ((data9[i][1]*4 + data9[i][2]*3 + data9[i][3]*2 + data9[i][4]*1) / (total*4)) * 100 }};
+                          var roundedResult = (Math.round(rawResult * 100) / 100).toFixed(1);
+                          document.write(roundedResult + " %");
+                      </script>
+                  {% else %}
+                      
+                  {% endif %}
+              </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+{% endif %}
+
+
+  {%if sdata9 %}
+  <table class="SuggestionTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Suggestions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for value in sdata9 %}
+      <tr>
+        <td>{{ value[0] }}</td>
+        <td>{{ value[1] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</center>
+ </div>
+ <div id="CHAT-content" class="content" style="display: none">
+  <div id="messages-container">
+    <div id="messages"></div>
+</div>
+
+<div id="sendMsg">
+    <input type="text" id="msgTxt" placeholder="ENTER YOUR MSG...">
+    <input type="submit" id="msgBtn" value="send" onclick="module.sendMsg()">
+</div>
+</center>
+</div>
+    </div>
+
+    <script>
+      var loader = document.getElementById("preloader");
+      var startTime = new Date().getTime();
+      var pageLoaded = false;
+
+      // Function to hide the preloader
+      function hidePreloader() {
+        loader.style.visibility = "hidden";
+      }
+      // Function to handle when the page is fully loaded
+      function onPageLoaded() {
+        pageLoaded = true;
+        var currentTime = new Date().getTime();
+        var timeDiff = currentTime - startTime;
+        var minDisplayTime = 800; // 1 seconds
+        var remainingTime = minDisplayTime - timeDiff;
+
+        if (remainingTime <= 0) {
+          hidePreloader();
+        } else {
+          setTimeout(hidePreloader, remainingTime);
+        }
+      }
+      // Hide the preloader after 1 seconds (minimum display time)
+      setTimeout(hidePreloader, 800);
+      // Check if the page is fully loaded, and if so, hide the preloader
+      window.addEventListener("load", onPageLoaded);
+    </script>
+
+
+    <script>
+      // Function to show/hide content based on the clicked link
+      function showContent(contentId) {
+        // Hide all content sections
+        var contentSections = document.querySelectorAll(".content");
+        contentSections.forEach(function (content) {
+          content.style.display = "none";
+        });
+
+        // Show the selected content
+        var selectedContent = document.getElementById(contentId);
+        if (selectedContent) {
+          selectedContent.style.display = "block";
+        }
+      }
+
+      // Add click event listeners to the sidebar links
+      document
+        .getElementById("dashboard-link")
+        .addEventListener("click", function () {
+          showContent("dashboard-content");
+        });
+
+      document.getElementById("AIML").addEventListener("click", function () {
+        showContent("AIML-content");
+      });
+
+      document.getElementById("CSE").addEventListener("click", function () {
+        showContent("CSE-content");
+      });
+
+      document.getElementById("CSE(AI)").addEventListener("click", function () {
+        showContent("CSE(AI)-content");
+      });
+
+      document.getElementById("CST").addEventListener("click", function () {
+        showContent("CST-content");
+      });
+
+      document.getElementById("CIVIL").addEventListener("click", function () {
+        showContent("CIVIL-content");
+      });
+
+      document.getElementById("EEE").addEventListener("click", function () {
+        showContent("EEE-content");
+      });
+
+      document.getElementById("ECE").addEventListener("click", function () {
+        showContent("ECE-content");
+      });
+
+      document.getElementById("ECT").addEventListener("click", function () {
+        showContent("ECT-content");
+      });
+
+      document.getElementById("MECH").addEventListener("click", function () {
+        showContent("MECH-content");
+      });
+
+      document.getElementById("CHAT").addEventListener("click", function () {
+        showContent("CHAT-content");
+      });
+
+      // Initially, show the dashboard content
+      showContent("dashboard-content");
+    </script>
+
+<script>
+  // Sample data for the 10 charts (replace with your actual data)
+  // Define the dataset colors
+  var datasetColors = ['#2196F3', '#800000', '#4CAF50', '#9C27B0'];
+  var chartDataArray = [
+      // Data for chart 1
+      [
+          {% for item in data %}
+          {
+              label: '{{ item[0] }}',
+              values: [{{ item[1] }}, {{ item[2] }}, {{ item[3] }}, {{ item[4] }}]
+          },
+          {% endfor %}
+      ],
+      [
+          {% for item in data1 %}
+          {
+              label: '{{ item[0] }}',
+              values: [{{ item[1] }}, {{ item[2] }}, {{ item[3] }}, {{ item[4] }}]
+          },
+          {% endfor %}
+      ],
+      [
+          {% for item in data2 %}
+          {
+              label: '{{ item[0] }}',
+              values: [{{ item[1] }}, {{ item[2] }}, {{ item[3] }}, {{ item[4] }}]
+          },
+          {% endfor %}
+      ],
+      [
+          {% for item in data3 %}
+          {
+              label: '{{ item[0] }}',
+              values: [{{ item[1] }}, {{ item[2] }}, {{ item[3] }}, {{ item[4] }}]
+          },
+          {% endfor %}
+      ],
+      [
+          {% for item in data4 %}
+          {
+              label: '{{ item[0] }}',
+              values: [{{ item[1] }}, {{ item[2] }}, {{ item[3] }}, {{ item[4] }}]
+          },
+          {% endfor %}
+      ],
+      [
+          {% for item in data5 %}
+          {
+              label: '{{ item[0] }}',
+              values: [{{ item[1] }}, {{ item[2] }}, {{ item[3] }}, {{ item[4] }}]
+          },
+          {% endfor %}
+      ],
+      [
+          {% for item in data6 %}
+          {
+              label: '{{ item[0] }}',
+              values: [{{ item[1] }}, {{ item[2] }}, {{ item[3] }}, {{ item[4] }}]
+          },
+          {% endfor %}
+      ],
+      [
+          {% for item in data7 %}
+          {
+              label: '{{ item[0] }}',
+              values: [{{ item[1] }}, {{ item[2] }}, {{ item[3] }}, {{ item[4] }}]
+          },
+          {% endfor %}
+      ],
+      [
+          {% for item in data8 %}
+          {
+              label: '{{ item[0] }}',
+              values: [{{ item[1] }}, {{ item[2] }}, {{ item[3] }}, {{ item[4] }}]
+          },
+          {% endfor %}
+      ],
+      [
+          {% for item in data9 %}
+          {
+              label: '{{ item[0] }}',
+              values: [{{ item[1] }}, {{ item[2] }}, {{ item[3] }}, {{ item[4] }}]
+          },
+          {% endfor %}
+      ]
+      // Data for chart 2 (and so on for the remaining charts)
+  ];
+  var chartTitles = [
+    { title: 'Sri Vasavi engineering College wide : {{ table }} feedback response' },
+    { title: 'AIM Branch : {{ table }} feedback response' },
+    { title: 'CSE Branch : {{ table }} feedback response' },
+    { title: 'CSE(AI) Branch : {{ table }} feedback response' },
+    { title: 'CST Branch : {{ table }} feedback response' },
+    { title: 'CE Branch : {{ table }} feedback response' },
+    { title: 'EEE Branch : {{ table }} feedback response' },
+    { title: 'ECE Branch : {{ table }} feedback response' },
+    { title: 'ECT Branch : {{ table }} feedback response' },
+    { title: 'ME Branch : {{ table }} feedback response' }
+  ];
+
+  var totalResponses={{totalResponses}}
+
+  var chartSubTitles = [
+    { subtitle: 'Year : {{year}} , Total Number Of Responses : '+totalResponses[0] },
+    { subtitle: 'Year : {{year}} , Total Number Of Responses : '+totalResponses[1] },
+    { subtitle: 'Year : {{year}} , Total Number Of Responses : '+totalResponses[2] },
+    { subtitle: 'Year : {{year}} , Total Number Of Responses : '+totalResponses[3]},
+    { subtitle: 'Year : {{year}} , Total Number Of Responses : '+totalResponses[4] },
+    { subtitle: 'Year : {{year}} , Total Number Of Responses : '+totalResponses[5]},
+    { subtitle: 'Year : {{year}} , Total Number Of Responses : '+totalResponses[6] },
+    { subtitle: 'Year : {{year}} , Total Number Of Responses : '+totalResponses[7]},
+    { subtitle: 'Year : {{year}} , Total Number Of Responses : '+totalResponses[8]},
+    { subtitle: 'Year : {{year}} , Total Number Of Responses : '+totalResponses[9] }
+  ];
+  var customLegendTexts = ['Strongly Agree', 'Agree', 'Neutral', 'Disagree'];
+  // Loop to create and configure 10 Chart.js charts
+  for (var i = 0; i < 10; i++) {
+      var data = chartDataArray[i];
+      // Extract labels and data values
+      var labels = data.map(item => item.label);
+      var values = data.map(item => item.values);
+      // Chart.js configuration (common for all charts)
+      var options = {
+    plugins: {
+        title: {
+            display: true,
+            text: chartTitles[i].title,
+            font: {
+                size: 22, // Adjust the font size
+            },
+            color: 'black',
+        },
+        subtitle: {
+            display: true,
+            text: chartSubTitles[i].subtitle,
+            font: {
+                size: 16, // Adjust the font size
+            },
+            color: 'black',
+        },
+    },
+    scales: {
+        x: {
+            title: {
+                display: true,
+                text: 'Questions', // Title for the X-axis
+                font: {
+                    size: 16, // Adjust the font size
+                    weight: 'bold', // Make the X-axis label bold
+                },
+                color: 'black', // Set the font color to black
+            },
+            ticks: {
+                font: {
+                    size: 16,
+                },
+                color: 'black', // Set the tick font color to black
+            },
+        },
+        y: {
+            title: {
+                display: true,
+                text: 'Responses', // Title for the Y-axis
+                font: {
+                    size: 16, // Adjust the font size
+                    weight: 'bold', // Make the Y-axis label bold
+                },
+                color: 'black', // Set the font color to black
+            },
+            ticks: {
+                font: {
+                    size: 16,
+                },
+                color: 'black', // Set the tick font color to black
+            },
+        },
+    },
+};
+
+
+      // Create a column chart for each canvas
+      var ctx = document.getElementById('MaincolumnChart' + i).getContext('2d');
+      var columnChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: labels,
+              datasets: values[0].map((_, index) => ({
+                  label: customLegendTexts[index],
+                  data: values.map(valueSet => valueSet[index]),
+                  backgroundColor: datasetColors[index],
+              })),
+          },
+          options: options,
+      });
+  }
+</script>
+
+<script>
+  module = {};
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+  import { getDatabase, ref, set, remove, onChildAdded, onChildRemoved } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+  const firebaseConfig = {
+apiKey: "AIzaSyCGvVrIeJYhM3EXxUyj-wewPEm7xlSQaIo",
+authDomain: "techtweets-89123.firebaseapp.com",
+databaseURL: "https://techtweets-89123-default-rtdb.firebaseio.com",
+projectId: "techtweets-89123",
+storageBucket: "techtweets-89123.appspot.com",
+messagingSenderId: "810957633326",
+appId: "1:810957633326:web:02fa777660a3acbb23ecbf"
+};
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  function scrollToBottom() {
+var messagesContainer = document.getElementById('messages-container');
+messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+  // variables
+  var msgTxt = document.getElementById('msgTxt');
+  var sender="{{ idname }}" ;
+  console.log(sender);
+  console.log("{{ idname }}")
+  if (sessionStorage.getItem('sender')) {
+sender = sessionStorage.getItem('sender');
+} 
+else {
+// Use the value of idname passed by Flask as the sender
+sender = "{{ idname }}";  // This will insert the Flask variable value into the JavaScript code
+sessionStorage.setItem('sender', sender);
+}
+
+  // TO SEND MESSAGES
+  module.sendMsg = function sendMsg(){
+      var msg = msgTxt.value;
+      var timestamp = new Date().getTime();
+      set(ref(db,"messages/"+timestamp),{
+          msg : msg,
+          sender : sender
+      })
+
+      msgTxt.value="";
+  }
+
+  // TO RECEIVE MSG
+  onChildAdded(ref(db,"messages"), (data)=>{
+      if(data.val().sender == sender){
+          messages.innerHTML += "<div style=justify-content:end class=outer id="+data.key+"><div id=inner class=me>you : "+data.val().msg+"<button id=dltMsg onclick=module.dltMsg("+data.key+")>DELETE</button></div></div>";
+      } else {
+          messages.innerHTML += "<div class=outer id="+data.key+"><div id=inner class=notMe>"+data.val().sender+" : "+data.val().msg+"</div></div>";
+      }
+      scrollToBottom();
+  })
+
+  // TO DELETE MSG
+  module.dltMsg = function dltMsg(key){
+      remove(ref(db,"messages/"+key));
+  }
+
+  // WHEN MSG IS DELETED
+  onChildRemoved(ref(db,"messages"),(data)=>{
+      var msgBox = document.getElementById(data.key);
+      messages.removeChild(msgBox);
+  })
+</script>
+
+
+<script>
+  function captureScreenshot() {
+    const mainContent = document.getElementById("main-content");
+
+    // Use HTML2Canvas to capture the visible part of the main content with a higher scale
+    html2canvas(mainContent, { scale: 5 }).then(function(canvas) {
+      // Convert the canvas to a data URL
+      const imgData = canvas.toDataURL("image/png");
+
+      // Create a download link for the image
+      const link = document.createElement("a");
+      link.href = imgData;
+      link.download = "main_content_screenshot.png";
+      link.click();
+    });
+  }
+</script>
+
+
+
+
+
+
+  </body>
+</html>

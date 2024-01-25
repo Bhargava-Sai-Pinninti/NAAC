@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin New Stakeholder</title>
+
+    <style>
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Base styles for responsive layout */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input,
+select {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: #283ba7;
+    color: #fff;
+}
+
+.success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.error {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.warning {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+    background-color: #283ba7;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+}
+
+tbody tr {
+    background-color: #fff;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Media queries for adjusting layout at different breakpoints */
+@media (max-width: 600px) {
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 400px) {
+    h2 {
+        font-size: 1.6rem;
+    }
+}
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Admin New Stakeholder</h2>
+        <!-- Display Messages -->
+        <div class="message">{{ message }}</div>
+        <!-- Manual Submission Form -->
+        <form action="/admin_new_stakeholder" method="post">
+            
+            <div class="form-group">
+                <label for="RollNumber">RollNumber:</label>
+                <input type="text" id="RollNumber" name="RollNumber" required autocomplete="off">
+            </div>
+            
+            <div class="form-group">
+                <label for="Password">Password:</label>
+                <input type="password" id="Password" name="Password" required autocomplete="off">
+            </div>
+            
+
+            <div class="form-group">
+                <label for="userType">User Type:</label>
+                <select id="userType" name="userType" required>
+                    <option disabled selected value="">Select User Type</option>
+                    <option value="Faculty">Faculty</option>
+                    <option value="Student">Student</option>
+                    <option value="Alumni">Alumni</option>
+                    <option value="Employer">Employer</option>
+                </select>
+            </div>
+
+
+                    <!-- Department dropdown with dummy option -->
+            <div class="form-group">
+                <label for="Department">Department:</label>
+                <select id="Department" name="Department" required>
+                    <option disabled selected value="">Select Department</option>
+                    {% for department in departments %}
+                        <option value="{{ department }}">{{ department }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+
+            <button type="submit">Submit Manual</button>
+        </form>
+
+        <!-- Drag-and-Drop Submission Form -->
+        <form action="/admin_new_stakeholder_drag" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="excelFile">Upload Excel File:</label>
+                <input type="file" id="excelFile" name="excelFile" accept=".xlsx, .xls, .xlsm, .xlsb, .csv, .xltx, .xltm, .xls, .xlt, .xml, .xlw, .xlam, .xla" required>
+            </div>
+
+            <button type="submit">Submit Drag-and-Drop</button>
+        </form>
+
+        <!-- Display Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>RollNumber</th>
+                        <th>Status</th>
+                        <th>UserType</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in entries %}
+                    <tr class="{% if 'Data added successfully' in entry.status %}success{% elif 'already exists' in entry.status %}warning{% else %}error{% endif %}">
+                        <td>{{ entry.RollNumber }}</td>
+                        <td>{{ entry.status }}</td>
+                        <td>{{ entry.UserType }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

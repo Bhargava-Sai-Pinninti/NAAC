@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Info</title>
+  </head>
+  <body>
+    <h1 align="center"><span>Welcome to Admin Portal</span></h1>
+    <!-- image card layout start -->
+    <div class="container">
+      <!-- image row start -->
+      <div class="row">
+        <!-- image card start -->
+        <div class="image">
+          <div class="details">
+            <h2><span>Dash Board</span></h2>
+            <p>Open the Dashboard by clicking the below open button</p>
+            <div class="more">
+              <button class="feedback-submit" type="submit">Open</button>
+            </div>
+          </div>
+        </div>
+        <!-- image card end -->
+        <!-- image card start -->
+        <div class="image">
+          <div class="details">
+            <h2><span>Insert User</span></h2>
+            <p>enter user id , password and Stackholder category </p>
+            <div class="more">
+              <label for="syllabusRevision2">id :</label>
+              <input type="text" id="idname" name="idname" placeholder="Enter id">
+              <select id="syllabusRevision2" name="syllabusRevision2">
+                <option value="" disabled selected>select an category</option>
+                <option value="students">facultys</option>
+                <option value="agree">Students</option>
+                <option value="neutral">Alumnis</option>
+                <option value="disagree">Employers</option>
+              </select>
+              <button class="feedback-submit" type="submit">Open</button>
+            </div>
+          </div>
+        </div>
+        <!-- image card end -->
+      </div>
+      <!-- image row end -->
+      <!-- image row start -->
+      <div class="row">
+        <!-- image card start -->
+        <div class="image">
+          <div class="details">
+            <h2><span>DELETE USER</span></h2>
+            <p>enter user id and Stackholder category </p>
+            <div class="more">
+              <label for="syllabusRevision3">Enter id :</label>
+              <input type="text" id="id" name="id" placeholder="Enter id here ">
+              <div class="radio-group">
+                <input type="radio" id="group" name="group" value="FacultysS">
+                <label for="syllabusRevision3_students">Facultys</label>
+                
+                <input type="radio" id="group" name="group" value="Students">
+                <label for="syllabusRevision3_agree">Students</label>
+                
+                <input type="radio" id="group" name="group" value="Alumnis">
+                <label for="syllabusRevision3_neutral">Alumnis</label>
+                
+                <input type="radio" id="group" name="group" value="Employers">
+                <label for="syllabusRevision3_disagree">Employers</label>
+              </div>
+              <button class="feedback-submit" type="submit">Open</button>
+            </div>
+          </div>
+        </div>
+        <!-- image card end -->
+        <!-- image card start -->
+        <div class="image">
+          <div class="details">
+            <h2><span>Password Change</span></h2>
+            <p>enter user id , New password and Stackholder category </p>
+            <div class="more">
+              <select id="syllabusRevision4" name="syllabusRevision4">
+                <option value="" disabled selected>Please select an option</option>
+                <option value="students">facultys</option>
+                <option value="agree">Students</option>
+                <option value="neutral">Alumnis</option>
+                <option value="disagree">Employers</option>
+              </select>
+              <label for="syllabusRevision4">Select year :</label>
+              <input type="number" id="yearOfPassing4" name="yearOfPassing4" placeholder="Please enter your year of passing">
+              <button class="feedback-submit" type="submit">Open</button>
+            </div>
+          </div>
+        </div>
+        <!-- image card end -->
+      </div>
+      <!-- image row end -->
+    </div>
+    <!-- image card layout end -->
+    <script>
+      // ... Your JavaScript code here ...
+    </script>
+  </body>
+ <style>
+      * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      height: 100vh;
+      font-family: "Raleway", sans-serif;
+    }
+    h1{
+      font-size: 30px;
+      font-weight: 600;
+      text-align: center;
+    }
+    
+    .container {
+      margin: 30px;
+    }
+    
+    .row {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .image {
+      position: relative;
+      flex: 1;
+      max-width: 460px;
+      height: 300px;
+      margin: 20px;
+      overflow: hidden;
+      border-radius: 45px;
+      background: linear-gradient(to bottom, #0000008c 30%, #00000036 100%);
+    }
+    
+    .image .details {
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: #fff;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .image .details h2 {
+      text-align: center;
+      font-size: 35px;
+      text-transform: uppercase;
+      font-weight: 300;
+      margin-top: 25%;
+      transition: 0.8s;
+      transition-property: transform;
+    }
+    
+    .image .details h2 span {
+      font-weight: 900;
+    }
+    
+    .image:hover .details h2 {
+      transform: translateY(-200%);
+    }
+    
+    .image .details p {
+      margin: 30px 30px 0 30px;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      opacity: 0;
+      transition: 0.9s;
+      transition-property: opacity, transform;
+    }
+    
+    .image:hover .details p {
+      opacity: 1;
+      transform: translateY(-170px);
+    }
+    
+    .more {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.856);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      bottom: -220px;
+      transition: 1s;
+      transition-property: bottom;
+    }
+    
+    .image:hover .more {
+      bottom: 0;
+    }
+    
+    .more label,
+    .more input {
+      margin-bottom: 10px;
+    }
+    
+    .more .feedback-submit {
+      margin-top: 10px;
+    }
+    
+    button {
+      height: 40px;
+      width: 100px;
+      border-radius: 35px;
+      cursor: pointer;
+      background-color: #3287fc;
+      font-weight: bold;
+      font-size: 15px;
+      color: white;
+      border: none;
+      transition: all .5s ease-in-out;
+    }
+    
+    button:hover {
+      background-color: #8232cc;
+      transform: scale();
+    }
+    
+    input {
+      width: 60%;
+      background: #bdc3c78c;
+      border: none;
+      height: 30px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 15px;
+      color: #141414;
+    }
+    
+    input:focus {
+      outline: none;
+    }
+    
+    ::placeholder {
+      color: rgba(255, 255, 255, 0.726);
+      text-align: center;
+      opacity: 90;
+    }
+    
+    select {
+      width: 60%;
+      background: #bdc3c78c;
+      border: none;
+      height: 30px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 15px;
+      color: #000000;
+    }  
+ </style>
+</html>

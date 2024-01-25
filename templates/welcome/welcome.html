@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-adsense-account" content="ca-pub-6139361960143745">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6139361960143745"
+     crossorigin="anonymous"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet"/>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --primary-color: #046a68;
+  --secondary-color: #017479;
+  --text-dark: #0f172a;
+  --text-light: #94a3b8;
+  --white: #ffffff;
+  --green: #50ff31;
+  --max-width: 1400px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+a {
+  color: var(--white);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600; /* Adjust the font weight as needed */
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+a:hover {
+  /* Optional: Change color on hover */
+  color: var(--green);
+}
+
+
+.container {
+  max-width: var(--max-width);
+  min-height: 100vh;
+  margin: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* your existing styles */
+
+.nav__logo {
+  display: flex;
+  align-items: center;
+}
+
+.nav__logo img {
+  max-width: 50px;
+}
+
+.logo-label {
+  margin-left: 1rem; /* Adjust the margin as needed */
+  font-family: "Montserrat", sans-serif; /* Use Montserrat font */
+  font-size: 1rem; /* Adjust the font size as needed */
+  font-weight: 600; /* Adjust the font weight as needed */
+  color: var(--white); /* Adjust the color as needed */
+}
+
+/* your existing styles */
+
+.link a {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.destination__container {
+  position: relative;
+  padding: 3rem 0 3rem 3rem;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.bg__img__1 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-100%);
+  opacity: 0.6;
+  z-index: -1;
+}
+
+.bg__img__2 {
+  position: absolute;
+  bottom: 2rem;
+  right: 60%;
+  transform: translateX(100%);
+  opacity: 0.8;
+  z-index: -1;
+}
+
+.bg__img__3 {
+  position: absolute;
+  top: 0;
+  left: 80%;
+  transform: translateX(-100%);
+  opacity: 0.6;
+  z-index: -1;
+}
+
+.bg__img__4 {
+  position: absolute;
+  bottom: 2rem;
+  right: 20%;
+  transform: translateX(100%);
+  opacity: 0.8;
+  z-index: -1;
+}
+
+.content h1 {
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--white);
+}
+
+.content h1 span {
+  -webkit-text-stroke: 2px var(--white);
+  -webkit-text-fill-color: transparent;
+}
+
+.content p {
+  max-width: 350px;
+  margin-bottom: 2rem;
+  line-height: 1.5rem;
+  color: var(--white);
+}
+
+
+/* ... (your existing CSS) */
+
+/* ... (your existing CSS) */
+
+.destination__container {
+  position: relative;
+  padding: 3rem 0 3rem 3rem;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem; /* Decrease the gap between the grid columns */
+  align-items: center;
+}
+
+/* ... (your existing CSS) */
+
+/* ... (your existing CSS) */
+
+.destination__grid {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  justify-content: space-evenly; /* Distribute items evenly along the container */
+  gap: 0.5rem; /* Decrease the gap between the cards */
+}
+
+.destination__card {
+  background-color: rgba(255, 255, 255, 0.2); /* Background color with transparency */
+  backdrop-filter: blur(8px); /* Apply a blur effect to the background */
+  border-radius: 15px; /* Add rounded corners to the card */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  margin-bottom: 1rem; /* Original margin */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  justify-content: center; /* Center content vertically */
+}
+
+.destination__card img {
+  width: 200px;
+}
+
+.card__content {
+  padding: 1rem;
+  text-align: center;
+}
+
+.card__content h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.card__content p {
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  color: #ffffff;
+}
+
+.card__content .btn {
+  padding: 0.5rem 1rem;
+  outline: none;
+  border: none;
+  border-radius: 15px;
+  font-weight: 600;
+  color: var(--white);
+  background-color: var(--primary-color);
+  cursor: pointer;
+  width: 200px;
+
+}
+
+/* ... (your existing CSS) */
+/* ... (your existing CSS) */
+
+/* Adjustments for Mobile View */
+@media (max-width: 600px) {
+  .nav__links {
+    display: none;
+  }
+
+  .nav__logo img {
+    max-width: 50px; /* Adjust logo size for better visibility on small screens */
+  }
+
+  .container {
+    padding: 1rem; /* Adjust overall padding for better spacing */
+  }
+
+  .destination__container {
+    padding: 2rem 1rem; /* Adjust padding for better spacing on mobile */
+    grid-template-columns: 1fr; /* Set a single column for small screens */
+  }
+
+  .bg__img__1,
+  .bg__img__2 {
+    display: none; /* Hide background images on small screens for better readability */
+  }
+
+  .content h1 {
+    font-size: 2rem; /* Adjust heading font size for better readability */
+    margin-bottom: 0.5rem;
+  }
+
+  .content p {
+    max-width: none; /* Remove max-width on paragraphs for full-width text */
+    margin-bottom: 1.5rem; /* Adjust margin for better spacing */
+  }
+
+  .destination__grid {
+    flex-direction: column; /* Display cards in a column for mobile view */
+    gap: 1rem; /* Add gap between cards */
+  }
+
+  .destination__card {
+    margin-bottom: 1rem; /* Add margin to separate the cards */
+    width: 100%; /* Make each card take full width on mobile */
+  }
+
+  .destination__card img {
+    width: 100%; /* Make the image fill the width of the card */
+  }
+
+  .card__content {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .card__content h4 {
+    font-size: 1rem; /* Adjust card heading font size for better readability */
+    margin-bottom: 0.5rem;
+  }
+
+  .card__content p {
+    margin-bottom: 0.75rem; /* Adjust margin for better spacing */
+    font-size: 0.8rem;
+  }
+
+  .card__content .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem; /* Adjust button font size for better readability */
+  }
+
+}
+
+#preloader {
+    /* Center the preloader on the page */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Set the initial visibility to visible */
+    visibility: visible;
+    /* Adjust the z-index to control stacking order */
+    z-index: 100;
+    /* Set the width and height for the preloader circle */
+    width: 100%;
+    height: 100%;
+    /* Optionally, you can style the preloader further */
+    /* For example, adjust the background color, border-radius, etc. */
+    background-color: rgb(255, 255, 255);
+    /* Center the preloader image within the circle */
+    background-image: url("{{ url_for('static', filename='images/preloader.gif') }}");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30%; /* Adjust the size of the preloader image */
+}
+    </style>
+    <title>Web Design Mastery | Explore Destinations</title>
+  </head>
+
+
+
+
+
+  <body style="background-image: url('{{ url_for('static', filename='images/bg.jpg') }}');">
+    <div id="preloader"></div>
+    <div class="container">
+      <nav>
+        <div class="nav__logo">
+          <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo">
+          <span class="logo-label">Sri Vasavi Engineering College (AUTONOMOUS)</span>
+        </div>
+      </nav>
+
+
+      <div class="destination__container">
+        <img class="bg__img__1" src="{{ url_for('static', filename='images/bg-dots.png') }}" alt="bg" />
+        <img class="bg__img__2" src="{{ url_for('static', filename='images/bg-arrow.png') }}"  alt="bg" />
+        <img class="bg__img__3" src="{{ url_for('static', filename='images/bg-dots.png') }}" alt="bg" />
+   
+     
+        <div class="content">
+          <h1>SRI VASAVI<br />ENGINEERING AND PHARMACY<br /><span>COLLEGE</span></h1>
+          <p>
+            Sri Vasavi Engineering College is an educational institution in Tadepalligudem, Andhra Pradesh, India. It is affiliated to Jawaharlal Nehru Technological University, Kakinada, A.P. and is approved by All India Council for Technical Education (AICTE), New Delhi and also accredited by NBA.
+          </p>
+          
+        </div>
+        <div class="destination__grid">
+          
+          <div class="destination__card">
+            <img src="{{ url_for('static', filename='images/p1.png') }}" alt="bg" />
+            <div class="card__content">
+              <h4>Admin Login</h4>
+              <p>
+                Click The Below Button For Admin Login.
+              </p>
+              <form action="{{ url_for('adminlogin') }}" method="GET">
+                <button class="btn" type="submit" >Click Here</button>
+            </form>
+            </div>
+          </div>
+          <div class="destination__card">
+            <img src="{{ url_for('static', filename='images/p2.png') }}" alt="bg" />
+            <div class="card__content">
+              <h4>StakeHolders Login</h4>
+              <p>
+                Click The Below Button For StakeHolders Login.
+              </p>
+              
+              <form action="{{ url_for('login') }}" method="GET">
+                <button class="btn" type="submit">Click Here </button>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var loader = document.getElementById("preloader");
+      var startTime = new Date().getTime();
+      var pageLoaded = false;
+
+      // Function to hide the preloader
+      function hidePreloader() {
+          loader.style.visibility = "hidden";
+      }
+
+      // Function to handle when the page is fully loaded
+      function onPageLoaded() {
+          pageLoaded = true;
+          var currentTime = new Date().getTime();
+          var timeDiff = currentTime - startTime;
+          var minDisplayTime = 800; // 1 seconds
+          var remainingTime = minDisplayTime - timeDiff;
+
+          if (remainingTime <= 0) {
+              hidePreloader();
+          } else {
+              setTimeout(hidePreloader, remainingTime);
+          }
+      }
+
+      // Hide the preloader after 1 seconds (minimum display time)
+      setTimeout(hidePreloader, 800);
+
+      // Check if the page is fully loaded, and if so, hide the preloader
+      window.addEventListener("load", onPageLoaded);
+  </script>
+  </body>
+
+</html>

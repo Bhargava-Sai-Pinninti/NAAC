@@ -1,0 +1,442 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StakeHolders login page</title>
+  </head>
+  <body>
+    <header>
+      <ul>
+        <li> <a href="home">Home</a> </li>
+        <li> <a href="about">About & Contact_Us</a> </li>
+      </ul>
+    </header>
+    <div id="preloader"></div>
+
+    <div class="flip-card">
+        <div class="flip-card-front">
+          <div class="inner">
+            <img src="{{ url_for('static', filename='images/facultylogo.png') }}" class="icon" />
+            <h3>Faculty<br>login</h3>
+          </div>
+        </div>
+        <div class="flip-card-back">
+          <div class="inner">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="svecicon" />
+            <marquee><u>Faculty Login</u></marquee><marquee behavior="" direction=""></marquee>
+            <form method="POST">
+              <input type="hidden" name="user_type" value="Faculty">
+			<center><input type="text" placeholder="Enter Username"  autocomplete="off" id="userid" name="userid" required></center>
+			<center><input type="password" placeholder="Enter Password" id="password" name="password" required></center>
+			<center><button class="my login-btn">Login</button></center>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="flip-card">
+        <div class="flip-card-front">
+          <div class="inner">
+            <img src="{{ url_for('static', filename='images/studentlogo.png') }}" class="icon" />
+            <h3>Student<br>login</h3>
+          </div>
+        </div>
+        <div class="flip-card-back">
+          <div class="inner">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="svecicon" />
+            <marquee><u>Student Login</u></marquee><marquee behavior="" direction=""></marquee>
+            <form method="POST">
+              <input type="hidden" name="user_type" value="Student" >
+			<center><input type="text" placeholder="Enter Username"  autocomplete="off" id="userid" name="userid" required></center>
+			<center><input type="password" placeholder="Enter Password" id="password" name="password" required></center>
+			<center><button class="my login-btn">Login</button></center>
+      </form>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="flip-card">
+        <div class="flip-card-front">
+          <div class="inner">
+            <img src="{{ url_for('static', filename='images/alumnislogo.png') }}" class="icon" />
+            <h3>Alumni<br>Login</h3>
+          </div>
+        </div>
+        <div class="flip-card-back">
+          <div class="inner">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="svecicon" />
+            <marquee><u>Alumni Login</u></marquee><marquee behavior="" direction=""></marquee>
+            <form method="POST">
+              <input type="hidden" name="user_type" value="Alumni">
+			<center><input type="text" placeholder="Enter Username"  autocomplete="off" id="userid" name="userid" required></center>
+			<center><input type="password" placeholder="Enter Password" id="password" name="password" required></center>
+			<center><button class="my login-btn">Login</button></center>
+      </form>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="flip-card">
+        <div class="flip-card-front">
+          <div class="inner">
+            <img src="{{ url_for('static', filename='images/employerlogo.png') }}" class="icon" />
+            <h3>Employer<br>Login</h3>
+          </div>
+        </div>
+        <div class="flip-card-back">
+          <div class="inner">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="svecicon" />
+            <marquee><u>Employer Login</u></marquee><marquee behavior="" direction=""></marquee>
+            <form method="POST">
+              <input type="hidden" name="user_type" value="Employer">
+			<center><input type="text" placeholder="Enter Username"  autocomplete="off" id="userid" name="userid" required></center>
+			<center><input type="password" placeholder="Enter Password" id="password" name="password" required></center>
+			<center><button class="my login-btn">Login</button></center>
+      </form>
+          </div>
+        </div>
+      </div>
+
+      
+      <script>
+        var loader = document.getElementById("preloader");
+        var startTime = new Date().getTime();
+        var pageLoaded = false;
+
+        // Function to hide the preloader
+        function hidePreloader() {
+            loader.style.visibility = "hidden";
+        }
+
+        // Function to handle when the page is fully loaded
+        function onPageLoaded() {
+            pageLoaded = true;
+            var currentTime = new Date().getTime();
+            var timeDiff = currentTime - startTime;
+            var minDisplayTime = 800; // 1 seconds
+            var remainingTime = minDisplayTime - timeDiff;
+
+            if (remainingTime <= 0) {
+                hidePreloader();
+            } else {
+                setTimeout(hidePreloader, remainingTime);
+            }
+        }
+
+        // Hide the preloader after 1 seconds (minimum display time)
+        setTimeout(hidePreloader, 800);
+
+        // Check if the page is fully loaded, and if so, hide the preloader
+        window.addEventListener("load", onPageLoaded);
+    </script>
+  </body>
+  <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  background-color: #ffffff;
+  font-family: "Open Sans", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-image: url("{{ url_for('static', filename='images/background.jpg') }}");
+  background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+body::-webkit-scrollbar {
+    width: 0rem; /* Adjust the width as needed */
+    background-color: transparent; /* Make the background of the scrollbar transparent */
+}
+body::before{
+  content: "";
+  width: 50%;
+  height: 50%;
+  border-radius: 100%;
+  position: fixed;
+  bottom: -50%;
+  left: 25%;
+  z-index: -1;
+}
+body::after{
+  content: "";
+  width: 50%;
+  height: 50%;
+  border-radius: 100%;
+  position: fixed;
+  top: -50%;
+  left: 25%;
+  z-index: -1;
+  animation: animate_1 10s infinite;
+}
+
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  z-index: 1;
+  background-image: linear-gradient(180deg, #1d1e22e1, rgba(52, 53, 56, 0.267), transparent);
+  padding: 20px;
+}
+
+header ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+header ul li {
+  margin: 0 15px;
+}
+
+header ul li a {
+  position: relative;
+  color: #f4f4f4;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+header ul li a::after {
+  position: absolute;
+  content: "";
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 3px;
+  transition: all 0.2s linear;
+}
+
+header ul li a:hover::after {
+  width: 100%;
+  background-color: #ff0000;
+}
+
+header img {
+  width: 48px;
+  cursor: pointer;
+  border: 1px solid #0000005e;
+  border-radius: 20px;
+  padding: 4px;
+}
+
+.flip-card {
+  margin: 30px;
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+
+}
+.flip-card-front,
+.flip-card-back {
+  width: 250px;
+  min-height: 420px;
+  height: auto;
+  background-color: #000000;
+  background-image:        url({{ url_for('static', filename='images/card.jpg') }});
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+
+}
+
+.flip-card:nth-of-type(2) .flip-card-front,
+.flip-card:nth-of-type(2) .flip-card-back {
+  background-image: url({{ url_for('static', filename='images/card.jpg') }});
+}
+
+.flip-card:nth-of-type(3) .flip-card-front,
+.flip-card:nth-of-type(3) .flip-card-back {
+  background-image: url({{ url_for('static', filename='images/card.jpg') }});
+}
+
+.flip-card:nth-of-type(4) .flip-card-front,
+.flip-card:nth-of-type(4) .flip-card-back {
+  background-image: url({{ url_for('static', filename='images/card.jpg') }});
+}
+.flip-card-front {
+  transform: rotateY(0deg);
+  border-radius: 28px;
+}
+
+.flip-card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotateY(180deg);
+  border-radius: 28px;
+}
+
+.flip-card-front::after{
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: #0a0a0a;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.15;
+  border-radius: 28px;
+}
+.flip-card-back::after{
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: #0a0a0a;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.6;
+  border-radius: 28px;
+
+}
+
+.flip-card-front .inner,
+.flip-card-back .inner {
+  width: 100%;
+  padding: 40px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) translateZ(60px) scale(0.94);
+  z-index: 2;
+}
+
+.inner .icon {
+  width: 150px;
+  margin-bottom: 20px;
+}
+.inner .svecicon {
+  width: 65px;
+  margin-bottom: 15px;
+}
+
+.inner h3 {
+  margin-bottom: 8px;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 40px;
+  text-transform: capitalize;
+}
+
+.inner p {
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 28px;
+}
+
+.flip-card:hover .flip-card-front {
+  transform: rotateY(-180deg);
+
+}
+
+.flip-card:hover .flip-card-back {
+  transform: rotateY(0deg);
+}
+button{
+	height: 40px;
+	width: 155px;
+	border-radius: 35px;
+	cursor: pointer;
+	background-color: #3287fc;
+	font-weight: bold;
+	font-size: 18px;
+	color: white;
+	border:none;
+	transition: all .5s ease-in-out; 
+}
+button:hover{
+	background-color: #8232cc;
+  transform: scale();
+}
+input {
+      width: 100%;
+      background: #7e7e7e85;
+      border: none;
+      height: 25px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 18px;
+      color: #ffffff;
+}
+input:focus{
+  outline: none;
+}
+::placeholder {
+  color: rgba(255, 255, 255, 0.726);
+  opacity: 90;}
+u{
+    margin-bottom: 15px;
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 40px;
+  text-transform: capitalize;
+}
+select {width: 100%;
+      background: #7e7e7e85;
+      border: none;
+      height: 25px;
+      margin-bottom: 40px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 15px;
+      color: #ffffff;
+        }
+        option {
+    padding: 10px;
+    background-color: #252525; /* Background color */
+    color: #ffffff; /* Text color */
+}
+#preloader {
+    /* Center the preloader on the page */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Set the initial visibility to visible */
+    visibility: visible;
+    /* Adjust the z-index to control stacking order */
+    z-index: 100;
+    /* Set the width and height for the preloader circle */
+    width: 100%;
+    height: 100%;
+    /* Optionally, you can style the preloader further */
+    /* For example, adjust the background color, border-radius, etc. */
+    background-color: rgb(255, 255, 255);
+    /* Center the preloader image within the circle */
+    background-image: url("{{ url_for('static', filename='images/preloader.gif') }}");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30%; /* Adjust the size of the preloader image */
+}
+    /* Style for the marquee tag */
+    marquee {
+      padding: 5px;
+    }
+  </style>
+</html>
+

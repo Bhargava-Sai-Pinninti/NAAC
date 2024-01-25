@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Svec Admin's Dashboard</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Example using Google Fonts */
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-image: url("{{ url_for('static', filename='images/background1.jpg') }}");
+    background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      background-color: rgb(255, 255, 255);
+      scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    overflow-y: scroll;
+}
+/* Hide the scrollbar in Webkit (Chrome, Safari) */
+body::-webkit-scrollbar {
+    width: 0;
+}
+
+/* Create a custom scrollbar thumb */
+body::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0); /* Transparent thumb */
+}
+
+/* Create a custom scrollbar track */
+body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0); /* Transparent track */
+}
+
+.sidebar {
+  position: fixed;
+  top: 60px;
+  width: 160px;
+  height: calc(100% - 60px);
+  background: rgba(0, 0, 0, 0);
+  overflow: hidden; /* Hide the scrollbar by default */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.sidebar:hover ~ .main {
+    overflow: hidden;
+}
+.sidebar:hover {
+  overflow: auto; /* Show scrollbar on hover for scrolling */
+}
+
+
+        .sidebar ul {
+            margin-top: 10px;
+        }
+
+        .sidebar ul li {
+            width: 100%;
+            list-style: none;
+        }
+
+        .sidebar ul li:hover {
+            background: #007bff;
+        }
+
+        .sidebar ul li:hover a {
+            color: #ffffff;
+        }
+
+        .sidebar ul li a {
+            width: 100%;
+            text-decoration: none;
+            color: #000000;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .sidebar ul li a i {
+            min-width: 50px;
+            font-size: 20px;
+            text-align: center;
+        }
+        
+
+ 
+        /* Main Styles */
+/* Main Styles */
+.main {
+    position: absolute;
+    top: 60px;
+    left: 180px;
+    background: rgba(0, 0, 0, 0);
+    overflow: scroll; /* Add scroll but hide scrollbar */
+    scrollbar-width: none; /* Hide the scrollbar in Firefox */
+    -ms-overflow-style: none; /* Hide the scrollbar in IE/Edge */
+    padding:1px;
+    border-radius: 25px;
+    margin: 1px;
+    width: calc(100% - 270px); /* Adjust 260px according to your sidebar width */
+    min-height: calc(100vh - 60px);
+}
+
+/* Hide the scrollbar in Webkit (Chrome, Safari) */
+.main::-webkit-scrollbar {
+    display: none;
+}
+
+        h1 {
+    font-size: 28px;
+    color: #000000;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #000000;
+}
+
+a {
+    color: #0015ff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #3d00b0;
+}
+
+
+/* Add this CSS for side-by-side posts in the content class */
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.ww {
+    max-width: 20px; /* Adjust the maximum width as per your preference */
+    max-height: 28px; /* Adjust the maximum height as per your preference */
+}
+/* Style the top bar */
+/* Style the top bar */
+.topbar {
+    position: fixed;
+    background: rgb(223,227,230);
+    width: 100%;
+    padding: 0 20px;
+    height: 60px;
+    display: flex;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    align-items: center;
+    justify-content: space-between;
+    z-index: 2;
+}
+
+/* Style the form div */
+.formdiv {
+    display: flex;
+    align-items: center; /* Center vertically */
+}
+
+/* Style the form elements */
+.formdiv form {
+    display: flex;
+    align-items: center; /* Center vertically */
+}
+
+.formdiv label {
+    margin-right: 10px; /* Add spacing between labels and inputs */
+    font-weight: bold;
+}
+
+.formdiv select,
+.formdiv input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.formdiv button[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Add spacing between elements */
+.formdiv label,
+.formdiv select,
+.formdiv input[type="text"],
+.formdiv button[type="submit"] {
+    margin: 5px;
+}
+
+/* Additional styling */
+.formdiv select,
+.formdiv input[type="text"] {
+    background-color: #f4f4f4;
+}
+
+.formdiv select:focus,
+.formdiv input[type="text"]:focus {
+    border: 1px solid #007BFF;
+    outline: none;
+}
+.formdiv button:hover {
+    background-color: #48cf00;}
+
+/* Style the top bar h4 and h6 elements */
+.topbar h4,
+.topbar h6 {
+    color: #000000;
+    font-size: 15px;
+}
+
+
+/* Add this CSS to your existing styles */
+/* Styles for the container */
+.logo-container {
+  display: flex;
+  align-items: center; /* Vertically center the content */
+}
+
+/* Styles for the logo */
+.logo {
+  display: flex; /* Display its children side by side */
+  align-items: center; /* Vertically center the content */
+  margin-right: 10px; /* Add some spacing between the logo and the h4 */
+}
+
+.logo img {
+  width: 45px;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 2px;
+  transition: 3.5s;
+  margin: 5px;
+}
+
+.logo h4 {
+  color: #000000;
+  font-size: 15px;
+  margin-left: 5px; /* Add some spacing between the image and text */
+}
+
+
+
+h4 , label  {
+    color: #000000;
+    font-size: 15px;
+}
+
+
+.topbar .form-buttons {
+    display: flex;
+    align-items: center;
+}
+
+/* Adjust the button style with padding */
+.topbar .form-buttons button {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s, color 0.3s; /* Add transition for smooth hover effect */
+}
+
+/* Apply the hover effect */
+.topbar .form-buttons button:hover {
+    background-color: #ff9100;}
+
+.topbar .form-buttons button:last-child {
+    margin-right: 0; /* Remove margin from the last button */
+}
+
+.form-buttons select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f4f4f4;
+    margin: 5px;
+    font-weight: bold;
+    outline: none;
+}
+
+/* Add the form-buttons class to the select element in form-buttons */
+.form-buttons select {
+    background-color: #f4f4f4;
+}
+
+  /* Style for chat message boxes */
+  .outer {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 10px;
+    }
+
+    .me {
+   
+    background: rgb(255, 0, 68);
+    color: #ffffff;
+    border-radius: 10px; /* Add border-radius for a rounded look */
+    padding: 5px 10px; /* Add padding to the message box */
+    margin: 5px; /* Add margin to create space between messages */
+    
+    font-size: 22px;  /* Limit the width of the message box */
+}
+
+.me button {
+    background: rgb(255, 157, 0); /* Change the delete button background color */
+    color: #ffffff; /* Change the delete button text color */
+    border: none;
+    border-radius: 5px; /* Add border-radius for a rounded delete button */
+    padding: 10px 10px; /* Add padding to the delete button */
+    margin-left: 10px; /* Add margin to separate the delete button from the message */
+    cursor: pointer;
+}
+
+.me button:hover {
+    background: #f00a40; /* Change the delete button background color on hover */
+}
+
+
+    .notMe {
+    background:#0000ff; /* Change background color */
+    color: #ffffff;
+    border-radius: 10px; /* Add border-radius for a rounded look */
+    padding: 8px 10px; /* Add padding to the message box */
+    margin: 5px; 
+    font-size: 22px; /* Add margin to create space between messages */
+     /* Limit the width of the message box */
+    }
+
+
+    #messages {
+        flex-grow: 1;
+        overflow-y: auto;
+        background: #fffffffe;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        box-sizing: border-box;
+       
+    }
+    #msgTxt {
+    flex-grow: 1;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-size: 16px; /* Adjust the font size */
+    background-color: #ffffff; /* Set the background color */
+   
+}
+
+#msgBtn {
+    width: 100px; /* Adjust the button width */
+    height: 40px; /* Adjust the button height */
+    background: #0089fa;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+    margin-left: 10px;
+    font-size: 16px; /* Adjust the font size */
+}
+
+#msgBtn:hover {
+    background: #0078d4; /* Change the background color on hover */
+}
+
+
+    #CHAT-content {
+    position: absolute; /* Position absolutely within .main */
+    bottom: 0; /* Place it at the bottom */
+    width: 100%; /* Take the full width of .main */
+    height: auto; /* Allow it to expand as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+    padding: 10px;/* Push messages and input to the bottom */
+}
+#messages-container {
+     max-height: 80vh; /* Limit the maximum height to 60% of the viewport height */
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0); /* Use a semi-transparent white background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    margin: 5px;
+}
+
+
+#sendMsg {
+    background: rgba(95, 95, 95, 0.196);/* Semi-transparent white background for the input area */
+    padding: 10px;
+    margin: 10px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    border-radius: 30px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to separate from the messages container */
+}
+
+        #preloader {
+        /* Center the preloader on the page */
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        /* Set the initial visibility to visible */
+        visibility: visible;
+        /* Adjust the z-index to control stacking order */
+        z-index: 100;
+        /* Set the width and height for the preloader circle */
+        width: 100%;
+        height: 100%;
+        /* Optionally, you can style the preloader further */
+        /* For example, adjust the background color, border-radius, etc. */
+        background-color: rgb(255, 255, 255);
+        /* Center the preloader image within the circle */
+        background-image: url("{{ url_for('static', filename='images/preloader.gif') }}");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 30%; /* Adjust the size of the preloader image */
+      }
+      .chart-container {
+            width: 100%; /* Set the desired width of the container */
+            height: 500px;
+            margin: 1px; /* Set the desired height of the container */
+            background: rgba(0, 0, 0, 0);
+        }
+        
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+        }
+        /* Change font color for the labels and legends of each chart */
+.chart-legend ul li span, .chartjs-axis-label {
+    color: white; /* Set the color to white or your desired color */
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    padding: 1px;
+    border-bottom: 0.5px solid #a4a4a4;
+    transition: background-color 0.2s;
+}
+
+li:hover {
+    background-color: #e0e0e0;
+}
+
+
+.SuggestionTable {
+        width: 100%;
+        border-collapse: collapse;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        background: #f7f7f7; /* Light gray background color */
+        margin-bottom: 30px;
+    }
+    .SuggestionTable th, .SuggestionTable td {
+        border: 1px solid #ddd; /* Light gray border color */
+        padding: 5px;
+        text-align: center;
+    }
+
+    .SuggestionTable th {
+        background-color: #4CAF50; /* Official green background color */
+        color: #fff;
+        box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .SuggestionTable tr:nth-child(even) {
+        background-color: #f2f2f2; /* Light gray background for even rows */
+    }
+
+    .SuggestionTable tr:nth-child(odd) {
+        background-color: #e6e6e6; /* Slightly darker gray background for odd rows */
+    }
+
+    .SuggestionTable td:last-child {
+        font-weight: bold;
+        color: #4CAF50; /* Official green text color */
+    }
+
+    /* Responsive design */
+    @media screen and (max-width: 600px) {
+        .SuggestionTable {
+            border: 0;
+        }
+
+        .SuggestionTable thead {
+            display: none;
+        }
+
+        .SuggestionTable tr {
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .SuggestionTable td {
+            border: none;
+            border-bottom: 1px solid #ddd;
+            text-align: right;
+        }
+
+        .SuggestionTable td:last-child {
+            border-bottom: 0;
+        }
+    }
+
+.PercentageTable {
+        width: 100%;
+        border-collapse: collapse;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        background: #f2f2f2;
+        margin-top: 50px;
+        margin-bottom: 30px;
+    }
+
+    .PercentageTable th, .PercentageTable td {
+        border: 1px solid #ccc;
+        padding: 5px;
+        text-align: center;
+    }
+
+    .PercentageTable th {
+        background-color: #0073e6;
+        color: #fff;
+        box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .PercentageTable tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+
+    .PercentageTable tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .PercentageTable td:last-child {
+        font-weight: bold;
+        color: #0073e6;
+    }
+
+    /* Responsive design */
+    @media screen and (max-width: 600px) {
+        .PercentageTable {
+            border: 0;
+        }
+
+        .PercentageTable thead {
+            display: none;
+        }
+
+        .PercentageTable tr {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .PercentageTable td {
+            border: none;
+            border-bottom: 1px solid #ccc;
+            text-align: right;
+        }
+
+        .PercentageTable td:last-child {
+            border-bottom: 0;
+        }
+    }
+
+
+</style>
+</head>
+  <body>
+    <div id="preloader"></div>
+    <div class="container">
+      <div class="topbar">
+        <div class="logo-container">
+          <div class="logo">
+            <a href="/home"><img src="{{ url_for('static', filename='images/logo.png') }}"></a>
+            <h4>Admin Managment Dashboard</h4>
+          </div>
+        </div>
+        <div class="form-buttons">
+        <form action="{{ url_for('home') }}" method="GET">
+          <button type="submit">Log out</button>
+        </form>
+        </div>
+      </div>
+      <div class="sidebar">
+        <ul>
+          <li>
+            <a href="#" id="dashboard-link">
+              <div>College wide</div>
+            </a>
+          </li>
+          <li>
+            <a href="#" id="Manage_Admins"></a>
+              <div>Manage_Admins</div>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+
+
+  <div class="main" id="main-content">
+
+        <div id="dashboard-content" class="content">
+          <h1>main content</h1>
+        </div>
+        
+        <div id="Manage_Admins-content" class="content" style="display: none">
+          <h1>Manage_Admins</h1>
+
+          <h2>Admin Management</h2>
+
+          {% if success_message %}
+          <div class="success-message">{{ success_message }}</div>
+          {% endif %}
+      
+          {% if error_message %}
+          <div class="error-message">{{ error_message }}</div>
+          {% endif %}
+      
+          {% if file_not_found_message %}
+          <div class="error-message">{{ file_not_found_message }}</div>
+          {% else %}
+          <div class="form-container">
+              <div class="form">
+                  <h3>Insert New Admin</h3>
+                  <form method="POST" action="{{ url_for('admin_management') }}">
+                      <label for="adminid">Admin ID:</label>
+                      <input type="text" id="adminid" name="adminid" required autocomplete="off">
+      
+                      <label for="password">Password:</label>
+                      <input type="password" id="password" name="password" required>
+      
+                      <button type="submit" name="insert">Insert Admin</button>
+                  </form>
+              </div>
+      
+              <div class="form">
+                  <h3>Delete Existing Admin</h3>
+                  <form method="POST" action="{{ url_for('admin_management') }}">
+                      <label for="adminid">Admin ID:</label>
+                      <input type="text" id="adminid" name="adminid" required autocomplete="off">
+      
+                      <button type="submit" name="delete">Delete Admin</button>
+                  </form>
+              </div>
+          </div>
+      
+      <div class="table-container">
+          <h3>Admin List</h3>
+      
+          {% if Admins %}
+          <table border="1">
+              <tr>
+                  <th>Admin ID</th>
+                  <th>Password</th>
+              </tr>
+              {% for admin in Admins %}
+              <tr>
+                  <td>{{ admin.admin_id }}</td>
+                  <td>{{ admin.admin_password }}</td>
+              </tr>
+              {% endfor %}
+          </table>
+          {% else %}
+          <p>No admins available.</p>
+          {% endif %}
+          {% endif %}
+      </div>
+      
+      
+      
+         
+      
+        </div>
+  </div>
+
+    <script>
+      var loader = document.getElementById("preloader");
+      var startTime = new Date().getTime();
+      var pageLoaded = false;
+
+      // Function to hide the preloader
+      function hidePreloader() {
+        loader.style.visibility = "hidden";
+      }
+      // Function to handle when the page is fully loaded
+      function onPageLoaded() {
+        pageLoaded = true;
+        var currentTime = new Date().getTime();
+        var timeDiff = currentTime - startTime;
+        var minDisplayTime = 800; // 1 seconds
+        var remainingTime = minDisplayTime - timeDiff;
+
+        if (remainingTime <= 0) {
+          hidePreloader();
+        } else {
+          setTimeout(hidePreloader, remainingTime);
+        }
+      }
+      // Hide the preloader after 1 seconds (minimum display time)
+      setTimeout(hidePreloader, 800);
+      // Check if the page is fully loaded, and if so, hide the preloader
+      window.addEventListener("load", onPageLoaded);
+    </script>
+
+
+    <script>
+      // Function to show/hide content based on the clicked link
+      function showContent(contentId) {
+        // Hide all content sections
+        var contentSections = document.querySelectorAll(".content");
+        contentSections.forEach(function (content) {
+          content.style.display = "none";
+        });
+
+        // Show the selected content
+        var selectedContent = document.getElementById(contentId);
+        if (selectedContent) {
+          selectedContent.style.display = "block";
+        }
+      }
+
+      // Add click event listeners to the sidebar links
+      document
+        .getElementById("dashboard-link")
+        .addEventListener("click", function () {
+          showContent("dashboard-content");
+        });
+
+      document.getElementById("Manage_Admins").addEventListener("click", function () {
+        showContent("Manage_Admins-content");
+      });
+
+      document.getElementById("CSE").addEventListener("click", function () {
+        showContent("CSE-content");
+      });
+
+      document.getElementById("CSE(AI)").addEventListener("click", function () {
+        showContent("CSE(AI)-content");
+      });
+
+      document.getElementById("CST").addEventListener("click", function () {
+        showContent("CST-content");
+      });
+
+      document.getElementById("CIVIL").addEventListener("click", function () {
+        showContent("CIVIL-content");
+      });
+
+      document.getElementById("EEE").addEventListener("click", function () {
+        showContent("EEE-content");
+      });
+
+      document.getElementById("ECE").addEventListener("click", function () {
+        showContent("ECE-content");
+      });
+
+      document.getElementById("ECT").addEventListener("click", function () {
+        showContent("ECT-content");
+      });
+
+      document.getElementById("MECH").addEventListener("click", function () {
+        showContent("MECH-content");
+      });
+
+      document.getElementById("CHAT").addEventListener("click", function () {
+        showContent("CHAT-content");
+      });
+
+      // Initially, show the dashboard content
+      showContent("dashboard-content");
+    </script>
+
+  </body>
+</html>

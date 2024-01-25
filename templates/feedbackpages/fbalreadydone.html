@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Done</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        .message {
+            font-size: 24px;
+            color: green;
+        }
+        .gif {
+            width: 400px;
+            display: block;
+            margin: 0 auto;
+        }
+        .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: green;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="gif" src="{{ url_for('static', filename='images/done.gif') }}" alt="Success GIF">
+        <p class="message">You Already Submitted Your Feedback</p>
+        <br>
+        <form action="/fbalreadydone" method="post">
+            <input type="hidden" name="user_type" value="{{user_type}}">
+            <input type="hidden" name="userid" value="{{userid}}">
+            <button class="button" type="submit"> Clear Your Old Feedback !</button>
+        </form>
+                
+        <form action="/home">
+            <button class="button" type="submit">Click here to Logout</button>
+        </form>
+    </div>
+</body>
+</html>

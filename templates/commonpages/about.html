@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+/* Reset some default styles to ensure consistency */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set a background image for the body */
+body {
+    background-image: url("{{ url_for('static', filename='images/background.jpg') }}");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 25px;
+    min-height: 100vh;
+    font-family: 'Lato', sans-serif;
+    font-weight: 550;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: auto; /* Enable scrolling */
+}
+
+/* Style the header */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the navigation menu */
+ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+li {
+    margin-right: 20px;
+}
+
+li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+li a:hover {
+    color: #007BFF;
+}
+
+/* Style the header text */
+.header {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+}
+
+h1 {
+    font-size: 36px;
+    color: #333;
+}
+
+/* Style the marquee text */
+.marquee-text {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+marquee {
+    font-size: 24px;
+}
+
+/* Style the about section */
+.about-section {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the contact section */
+.contact-section {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the link in the contact section */
+.contact-section a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.contact-section a:hover {
+    text-decoration: underline;
+}
+
+/* Set a specific font for the entire page */
+body {
+    font-family: 'Lato', sans-serif;
+    font-weight: 550;
+}
+
+/* Style the header and paragraph in the about and contact sections */
+.about-section h2, .contact-section h2 {
+    color: #007BFF;
+}
+
+.about-section p, .contact-section p {
+    line-height: 1.6;
+}
+
+/* Style the contact details in the contact section */
+.contact-section u {
+    font-weight: bold;
+}
+
+/* Add margin and padding to the body to create space between the content and the edges */
+body {
+    margin: 0;
+    padding: 25px;
+}
+
+/* Enable scrolling if content exceeds the viewport */
+body {
+    overflow: auto;
+}
+
+    </style>
+    <title>Sri Vasavi Engineering College</title>
+</head>
+<body>
+    <header>
+        <ul>
+          <li> <a href="home">Home</a> </li>
+        </ul>
+      </header>
+    <div class="header">
+        <h1>Sri Vasavi Engineering College</h1>
+    </div>
+
+    <div class="container">
+        
+        <div class="about-section">
+            <h2>About Us</h2>
+            <p>
+                "Sri Vasavi Engineering College," considered one of the best engineering colleges in Andhra Pradesh, started its journey in the year 2001. Since its inception, the college has been striving to provide quality technical education to its students and making them industry-ready.
+                <!-- More about the college goes here -->
+            </p>
+        </div>
+
+        <div class="contact-section">
+            <h2>Contact Us</h2>
+            <p>
+                <u>Contact Details</u><br><br>
+                Sri Vasavi Engineering College<br>
+                Pedatadepalli, Tadepalligudem - 534 101,<br>
+                West Godavari Dist., Andhra Pradesh.<br>
+                Phone No's.: +91-8818-284355, 284344, 284544,<br>
+                Fax No.: +91-8818-284322<br>
+                Email: <a href="mailto:principal@srivasaviengg.ac.in">principal@srivasaviengg.ac.in</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

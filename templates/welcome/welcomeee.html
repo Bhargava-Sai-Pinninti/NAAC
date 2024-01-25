@@ -1,0 +1,238 @@
+<html>
+    <head>
+        <title>svec feedback portal</title>
+    </head>
+    <body>
+        <div id="preloader"></div>
+        <div class="hero" style="background-image: url('{{ url_for('static', filename='images/background.jpg') }}');">
+            <div class="navbar">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+                <h4 class="thetitle">Sri Vasavi Engineering College (AUTONOMOUS)</h4>
+                <form action="{{ url_for('adminlogin') }}" method="GET">
+                    <button type="submit">Admin Login</button>
+                </form>
+                
+            </div>
+            <div class="content">
+                <h3>Welcome To</h3>
+                <h1>Sri Vasavi Engineering College<br>StakeHolders Feedback Web Portal.</h1>
+                <form action="{{ url_for('login') }}" method="GET">
+                    <button type="submit">Click Here For StakeHolders Login</button>
+                </form>
+      
+            </div>
+             <div class="image-box">
+                <img src="{{ url_for('static', filename='images/modren.png') }}">
+            </div>
+           
+            <div class="bubbles">
+                <img src="{{ url_for('static', filename='images/bubble1.png') }}">
+                <img src="{{ url_for('static', filename='images/bubble.png') }}">
+                <img src="{{ url_for('static', filename='images/bubble1.png') }}">
+                <img src="{{ url_for('static', filename='images/bubble.png') }}">
+                <img src="{{ url_for('static', filename='images/bubble1.png') }}">
+                <img src="{{ url_for('static', filename='images/bubble.png') }}">
+                <img src="{{ url_for('static', filename='images/bubble1.png') }}">
+            </div>
+        </div>
+        <script>
+            var loader = document.getElementById("preloader");
+            var startTime = new Date().getTime();
+            var pageLoaded = false;
+    
+            // Function to hide the preloader
+            function hidePreloader() {
+                loader.style.visibility = "hidden";
+            }
+    
+            // Function to handle when the page is fully loaded
+            function onPageLoaded() {
+                pageLoaded = true;
+                var currentTime = new Date().getTime();
+                var timeDiff = currentTime - startTime;
+                var minDisplayTime = 800; // 1 seconds
+                var remainingTime = minDisplayTime - timeDiff;
+
+                if (remainingTime <= 0) {
+                    hidePreloader();
+                } else {
+                    setTimeout(hidePreloader, remainingTime);
+                }
+            }
+    
+            // Hide the preloader after 1 seconds (minimum display time)
+            setTimeout(hidePreloader, 800);
+    
+            // Check if the page is fully loaded, and if so, hide the preloader
+            window.addEventListener("load", onPageLoaded);
+        </script>
+    </body>
+    <style>
+
+        *{ margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+.hero{
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+.logo{
+    
+    width: 60px;
+    cursor: pointer;
+    border-radius: 20px;
+    padding: 2px;
+    transition: 3.5s;
+}
+
+.thetitle{
+    text-align: left;
+    color: #ffffff;
+    padding: 2px;
+    position: fixed;
+    left: 180px;
+}
+.navbar{
+    width: 85%;
+    height: 15%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+button{
+    color: #ffffff;
+    padding: 10px 25px;
+    background: transparent;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all .5s ease-in-out; 
+}
+button:hover{
+    background-color: #0213a7c9;
+    transform: scale(1.1);
+}
+.content{
+    color: #fbfcfd;
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+h1{
+    font-size: 30px;
+    margin: 5px 0 30px;
+    line-height: 55px;
+    transition: 3.5s;
+}
+h3{
+    font-size:20px;
+    transition: 3.5s;
+}
+.bubbles img{
+    width: 50px;
+    animation: bubble 7s linear infinite;
+
+}
+.bubbles{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: absolute;
+    bottom: -80px;
+}
+@keyframes bubble{
+    0%{
+        transform: translateY(0);
+        opacity: 0;
+    }
+    30%{
+        opacity: 1;
+    }
+    60%{
+        opacity: 0.95;
+    }
+    80%{
+        opacity: 0.8;
+    }
+    100%{
+        transform: translateY(-80vh);
+        opacity: 0;
+    }
+}
+.bubbles img:nth-child(1){
+    animation-delay: 2s;
+    width: 45px;
+}
+.bubbles img:nth-child(2){
+    animation-delay: 4.5s;
+}
+.bubbles img:nth-child(3){
+    animation-delay: 6s;
+    width: 35px;
+}
+.bubbles img:nth-child(4){
+    animation-delay: 2.5s;
+    width: 20px;
+}
+.bubbles img:nth-child(5){
+    animation-delay: 1.5s;
+    width: 50px;
+}
+.bubbles img:nth-child(6){
+    animation-delay: 7.5s;
+    width: 75px;
+}
+.bubbles img:nth-child(7){
+    animation-delay: 3.5s;
+    width: 40px;
+}
+.image-box img{
+    width: 350px;
+    display: block;
+    filter:hue-rotate(.4)
+    transition: .5s;
+}
+
+.image-box{
+    position: absolute;
+    bottom: 18%;
+    right: 12%;
+    overflow: hidden;
+    transition: 3.5s;
+}
+#preloader {
+    /* Center the preloader on the page */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Set the initial visibility to visible */
+    visibility: visible;
+    /* Adjust the z-index to control stacking order */
+    z-index: 100;
+    /* Set the width and height for the preloader circle */
+    width: 100%;
+    height: 100%;
+    /* Optionally, you can style the preloader further */
+    /* For example, adjust the background color, border-radius, etc. */
+    background-color: rgb(255, 255, 255);
+    /* Center the preloader image within the circle */
+    background-image: url("{{ url_for('static', filename='images/preloader.gif') }}");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30%; /* Adjust the size of the preloader image */
+}
+    </style>
+</html>

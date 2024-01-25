@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Responsive Animated Login Form Using HTML & CSS & JavaScript (2021)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Rajdhani:500,700&display=swap");
+        *,
+        *:before,
+        *:after {
+            box-sizing: border-box;
+        }
+
+        body {
+    overflow-y: hidden;
+    background-image: url("{{ url_for('static', filename='images/background.jpg') }}");
+    background-size: cover; /* Ensure the background image covers the entire viewport */
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Keep the background fixed in place */
+    background-position: center center; /* Center the background image */
+    display: flex;
+    font-family: "Rajdhani", sans-serif;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+
+        .contact-wrapper {
+            background: #ffffff3b;
+            box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.15);
+            border-radius: .75em;
+            padding: 4em 2em;
+            width: 40em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .left_side,
+        .right_side {
+            width: 50%;
+            padding: 0 3em;
+        }
+
+        .right_side > h2 {
+            color: #ffffff;
+            font-size: 1.75em;
+            text-align: center;
+        }
+
+        button {
+            height: 40px;
+            width: 150px;
+            margin-top: 5px;
+            border-radius: 35px;
+            cursor: pointer;
+            background-color: #3287fc;
+            font-weight: bold;
+            font-size: 16px;
+            color: white;
+            border: none;
+            transition: all .5s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #8232cc;
+            transform: scale();
+        }
+
+        input {
+            width: 80%;
+            background: #7e7e7e85;
+            border: none;
+            height: 30px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 20px;
+            color: #ffffff;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        ::placeholder {
+            color: rgba(255, 255, 255, 0.726);
+            opacity: 90;
+        }
+
+        u {
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-size: 19px;
+            font-weight: 700;
+            line-height: 40px;
+            text-transform: capitalize;
+        }
+        .logo-container {
+    width: 70%; /* Adjust the image size as needed */
+    text-align: center; /* Center the image horizontally */
+    margin: 0 auto;
+}
+
+/* Style the logo within the container */
+.logo-container img {
+    width: 100%; /* Set the logo size to 100% of the container */
+}
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  z-index: 1;
+  background-image: linear-gradient(180deg, #1d1e22e1, rgba(52, 53, 56, 0.267), transparent);
+  padding: 20px;
+}
+
+header ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+header ul li {
+  margin: 0 15px;
+}
+
+header ul li a {
+  position: relative;
+  color: #f4f4f4;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+header ul li a::after {
+  position: absolute;
+  content: "";
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 3px;
+  transition: all 0.2s linear;
+}
+
+header ul li a:hover::after {
+  width: 100%;
+  background-color: #ff0000;
+}
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <ul>
+          <li> <a href="home">Home</a> </li>
+          <li> <a href="about">About & Contact_Us</a> </li>
+        </ul>
+      </header>
+<div class="contact-wrapper">
+    <div class="left_side">
+      <div class="logo-container">
+        <img decoding="async" src="{{ url_for('static', filename='images/logo.png') }}">
+      </div>
+    </div>
+    <div class="right_side">
+        <h2>Admin Login</h2>
+        <div class="form-row">
+            <form method="POST">
+                <input type="hidden" name="user_type" value="admins">
+                <center><input type="text" placeholder="Admin id" autocomplete="off" id="username" name="username"></center>
+                <center><input type="password" placeholder="Password" id="password" name="password"></center>
+                <center><button class="my login-btn">Login</button></center>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folder and Excel Generator</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #007bff;
+            padding: 15px 0;
+            text-align: center;
+            color: #fff;
+        }
+
+        h1 {
+            color: #007bff;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        form {
+            display: grid;
+            gap: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        label {
+            color: #007bff;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input, select {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+            display: inline-block;
+        }
+
+        button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 18px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .section {
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+        }
+
+        .section h2, .section h3 {
+            color: #007bff;
+            margin-top: 0;
+        }
+
+        .section hr {
+            margin-top: 10px;
+            border: none;
+            height: 1px;
+            background-color: #454545;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-container input {
+            width: calc(100% - 10px);
+            margin-bottom: 10px;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .input-container button {
+            background-color: #357ddc;
+            color: #fff;
+            padding: 8px;
+            margin: 8px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 12px;
+            transition: background 0.3s ease;
+            align-self: flex-end;
+        }
+
+        .input-container button:hover {
+            background-color: #2e23c8;
+        }
+
+        .existing-folders {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .existing-folders ul {
+            padding: 0;
+        }
+
+        .existing-folders li {
+            margin-bottom: 10px;
+        }
+
+        .message {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .delete-folder-form {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .delete-folder-form label {
+            display: block;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .delete-folder-form select {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+            display: inline-block;
+        }
+
+        .delete-folder-form button {
+            background-color: #dc3545;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 18px;
+            transition: background 0.3s ease;
+        }
+
+        .delete-folder-form button:hover {
+            background-color: #c82333;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Folder and Excel Generator</h1>
+    </header>
+
+    <div class="existing-folders">
+        <h2>Existing Folders:</h2>
+        <ul>
+            {% for folder_name in folder_names %}
+                <li>{{ folder_name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% if message %}
+        <div class="message">{{ message }}</div>
+    {% endif %}
+
+    <form action="/create_folder" method="post">
+        <label for="folder_name">New Folder Name:</label>
+        <input type="text" name="folder_name" required autocomplete="off">
+
+        <!-- Department Section -->
+        <div class="section">
+            <h2>Departments :</h2>
+            {% for section in ['Department'] %}
+                <div class="input-container">
+                    <h3>{{ section.capitalize() }}</h3>
+                    <hr>
+                    <div id="{{ section }}_inputs"></div>
+                    <button type="button" onclick="addInput('{{ section }}', this)">Add Column</button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Sections -->
+        <div class="section">
+            <h2>Sections:</h2>
+            {% for section in ['Student', 'Employer', 'Faculty', 'Alumni'] %}
+                <div class="input-container">
+                    <h3>{{ section.capitalize() }}</h3>
+                    <hr>
+                    <div id="{{ section }}_inputs"></div>
+                    <button type="button" onclick="addInput('{{ section }}', this)">Add Column</button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit">Create Folder and Excel Files</button>
+    </form>
+
+    <div class="delete-folder-form">
+        <h2>Delete Existing Folder:</h2>
+        <form action="/delete_folder" method="post" onsubmit="return confirmDelete()">
+            <label for="delete_folder">Select Folder to Delete:</label>
+            <select name="delete_folder" id="delete_folder" required>
+                <option value="" disabled selected hidden>Choose the folder to delete</option>
+                {% for folder_name in folder_names %}
+                    <option value="{{ folder_name }}">{{ folder_name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Delete Folder</button>
+        </form>
+    </div>
+
+    <script>
+        function addInput(section, button) {
+            var inputDiv = document.getElementById(section + "_inputs");
+
+            var inputCount = inputDiv.getElementsByClassName("input-container").length + 1;
+
+            var container = document.createElement("div");
+            container.className = "input-container";
+
+            var input = document.createElement("input");
+            input.type = "text";
+            input.name = section + "_" + inputCount;
+            input.placeholder = "Column Name " + inputCount;
+            input.required = true;
+            input.autocomplete="off";
+
+            var deleteButton = document.createElement("button");
+            deleteButton.type = "button";
+            deleteButton.innerHTML = "Remove";
+            deleteButton.onclick = function () {
+                inputDiv.removeChild(container);
+            };
+
+            container.appendChild(input);
+            container.appendChild(deleteButton);
+
+            inputDiv.appendChild(container);
+        }
+
+        function confirmDelete() {
+            var selectedFolder = document.getElementById('delete_folder').value;
+
+            if (!selectedFolder) {
+                alert('Please choose a folder to delete.');
+                return false;
+            }
+
+            var confirmation = confirm('Are you sure you want to delete the folder: ' + selectedFolder + '?');
+
+            return confirmation;
+        }
+    </script>
+
+</body>
+</html>
