@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template, redirect, url_for,session,flash
-import secrets
 import os
 import pandas as pd
 import shutil
@@ -9,7 +8,7 @@ import time
 
 app = Flask(__name__)
 # Generate a random and secure secret key
-app.secret_key = secrets.token_hex(16)  # 16 bytes = 32 characters
+app.secret_key = os.urandom(32) # 16 bytes = 32 characters
 
 
 # Function to read Excel file with retry mechanism
@@ -116,15 +115,60 @@ def read_folder_names():
     return folders
 
 
-@app.route('/')
+@app.route('/',methods=['GET', 'POST'])
 def welcome():
+    alert_message = None
     session['admin'] = False
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user_type = request.form.get('user_type')
+        try:
+            if user_type == "admins":
+                # Read Excel file with retry mechanism
+                file_path = "./static/admin/adminlogin.xlsx"
+                df = read_excel_with_retry(file_path)
+
+                user_exists = ((df['admin_id'] == username) & (df['admin_password'] == password)).any()
+                df = None
+                if user_exists:
+                    session['adminname'] = username
+                    session['admin'] = True
+                    return redirect(url_for('admin_ui'))
+                else:
+                    alert_message = "Incorrect username or password"
+        except Exception as e:
+            print("Error:", e)
+            alert_message = "Error occurred"
     return render_template('welcome/welcome.html')
 
-@app.route('/home')
+@app.route('/home',methods=['GET', 'POST'])
 def home():
+    alert_message = None
     session['admin'] = False
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user_type = request.form.get('user_type')
+        try:
+            if user_type == "admins":
+                # Read Excel file with retry mechanism
+                file_path = "./static/admin/adminlogin.xlsx"
+                df = read_excel_with_retry(file_path)
+
+                user_exists = ((df['admin_id'] == username) & (df['admin_password'] == password)).any()
+                df = None
+                if user_exists:
+                    session['adminname'] = username
+                    session['admin'] = True
+                    return redirect(url_for('admin_ui'))
+                else:
+                    alert_message = "Incorrect username or password"
+        except Exception as e:
+            print("Error:", e)
+            alert_message = "Error occurred"
     return render_template('welcome/welcome.html')
+
 
 @app.route('/about')
 def about():
@@ -592,8 +636,8 @@ def AdminDashBoard():
 def login():
     alert_message = None
     if request.method == 'POST':
-        userid = request.form['userid']
-        password = request.form['password']
+        userid = request.form['userid'].strip()
+        password = request.form['password'].strip()
         user_type = request.form.get('user_type')
 
         with open('config.txt', 'r') as file:
@@ -604,10 +648,10 @@ def login():
 
         if os.path.exists(user_data_file):
             user_data = pd.read_excel(user_data_file)
-         
+
 
             # Check if the provided username and password match any row in the DataFrame
-            matching_user = user_data[(user_data['RollNumber'] == userid) & (user_data['Password'] == password)]
+            matching_user = user_data[(user_data['RollNumber'].astype(str) == userid) & (user_data['Password'].astype(str) == password)]
 
             if not matching_user.empty:
                 feedback_status = matching_user['Feedback'].iloc[0]
